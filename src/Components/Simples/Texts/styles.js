@@ -54,10 +54,15 @@ export const Text = styled.span`
 `;
 
 export const Link = styled(Text)`
-  animation: ${pulse} 1s linear infinite;
   text-decoration: underline;
   color: ${colors.secondaryColor} !important;
   cursor: pointer;
+
+  ${({ blink }) =>
+    blink &&
+    `
+      animation: ${pulse} 1s linear infinite;
+  `}
 `;
 
 export const TextContainer = styled.span`
