@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
 
   ${({ flow }) =>
