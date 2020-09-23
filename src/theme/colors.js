@@ -13,9 +13,10 @@ export default {
   shadeDark: "#d6d1c6",
 
   textDark: "#2c2c2c",
-  textClear: "#fffcf4",
+  textLight: "#fffcf4",
 
   successColor: "#75bc4a",
+  warningColor: "#EECB02",
   dangerColor: "#D43E3E",
 
   dinamicColor: "rgba(0,0,0,0.4)",
