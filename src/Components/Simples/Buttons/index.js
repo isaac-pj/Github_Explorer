@@ -5,12 +5,7 @@ import { noBubble } from "../../../utils/general";
 
 export const icons = codepoints;
 
-export const SolidButton = ({
-  name = "button",
-  action = null,
-  type = null,
-  ...props
-}) => (
+export const SolidButton = ({ name = "button", action = null, ...props }) => (
   <Styled.Button {...props} fill="solid" onClick={action}>
     {name}
   </Styled.Button>

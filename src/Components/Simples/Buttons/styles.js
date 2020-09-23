@@ -15,26 +15,26 @@ export const Button = styled.button`
     margin: ${margin};
   `}
 
-  ${({ fill }) =>
-    fill == "solid" &&
+  ${({ fill, theme = "dark", color = colors.secondaryColor }) =>
+    fill === "solid" &&
     `
-    color: ${colors.textClear};
-    background-color: ${colors.secondaryColor};
+    color: ${theme == "clear" ? colors.textDark : colors.textLight};
+    background-color: ${color};
     border: none;
   `}
 
-  ${({ fill }) =>
-    fill == "outline" &&
+  ${({ fill, theme = "dark", color = colors.secondaryColor }) =>
+    fill === "outline" &&
     `
-    color: ${colors.accent};
+    color: ${color};
     background-color: transparent;
-    border: solid 2px ${colors.secondaryColor};
+    border: solid 2px ${color};
   `}
 
-  ${({ fill, theme = "dark" }) =>
-    fill == "clear" &&
+  ${({ fill, theme = "dark", color = colors.secondaryColor }) =>
+    fill === "clear" &&
     `
-    color: ${theme === "clear" ? colors.textClear : colors.secondaryColor};
+    color: ${theme === "clear" ? colors.textLight : color};
     background-color: transparent;
     border: none;
 
@@ -74,7 +74,7 @@ export const ButtonIcon = styled.button`
   font-size: 12pt;
   text-transform: uppercase;
   background-color: ${colors.secondaryColor};
-  color: ${colors.textClear};
+  color: ${colors.textLight};
   position: relative;
   overflow: hidden;
   border: none;
@@ -105,7 +105,7 @@ export const ButtonIcon = styled.button`
   `}
 
   ${({ theme }) =>
-    theme == "clear" &&
+    theme === "clear" &&
     `
       color: ${colors.accent};
       background-color: ${colors.shadeMedium};
