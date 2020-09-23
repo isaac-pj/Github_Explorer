@@ -10,10 +10,9 @@ export const Page = styled.div`
     "content" 1fr
     "footer" auto;
 
-  ${({ color }) =>
-    color &&
+  ${({ color = colors.primaryColor }) =>
     `
-    background-color: ${color ? color : colors.primaryColor};
+    background-color: ${color};
   `}
 
   ${({ scroll }) =>
