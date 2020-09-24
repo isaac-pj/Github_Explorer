@@ -138,16 +138,16 @@ const SearchPage = () => {
             end={_renderListEnd(user)}
             action={() => showDetails(user)}
           >
-            <Text mode="block" weight="bold">
-              {user.login}
-            </Text>
-            <Link mode="block" url={user.html_url} size="12px">
-              {user.html_url}
-            </Link>
-            <Text size="12px">
-              {" "}
-              <strong>{user.followers}</strong> followers
-            </Text>
+            <Wrapper>
+              <Text weight="bold">{user.login}</Text>
+              <Link url={user.html_url} size="12px">
+                {user.html_url}
+              </Link>
+              <Text size="12px">
+                {" "}
+                <strong>{user.followers}</strong> followers
+              </Text>
+            </Wrapper>
           </ListItem>
         );
       })}
