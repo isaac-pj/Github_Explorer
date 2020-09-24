@@ -19,6 +19,13 @@ export const searchUser = async (string) => {
   return response.data;
 };
 
+export const getRepos = async (user, sort = "created", direction = "desc") => {
+  const response = await api.get(
+    `/users/${user}/repos?per_page=10&sort=${sort}&direction=${direction}`
+  );
+  return response.data;
+};
+
 export const request = async (url) => {
   const response = await axios.get(`${url}`, config);
   return response.data;
