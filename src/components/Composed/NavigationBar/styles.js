@@ -35,6 +35,8 @@ export const Container = styled.nav`
 
 export const Start = styled.section`
   /* background-color: green; */
+  position: absolute;
+  left: 0;
   padding: 1em;
 `;
 
@@ -46,5 +48,7 @@ export const Content = styled.section`
 
 export const End = styled.section`
   /* background-color: red; */
+  position: absolute;
+  right: 0;
   padding: 1em;
 `;
