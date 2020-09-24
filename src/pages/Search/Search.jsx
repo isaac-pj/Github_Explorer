@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-import { Formik, Form, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
 import * as Styled from "./Search.style";
@@ -25,6 +25,7 @@ const schema = Yup.object().shape({
 });
 
 const SearchPage = () => {
+  const [searchResult, setSearchResult] = useState([]);
   const [users, setUsers] = useState([]);
   const history = useHistory();
 
@@ -36,17 +37,58 @@ const SearchPage = () => {
     }
   }, []);
 
-  useEffect(() => {
-    console.log("RESULT", users);
-  }, [users]);
+  const onSubmit = (values, actions) => {
+    searchUsers(values.search);
+  };
 
-  const onSubmit = async (values, actions) => {
-    const data = await Github.searchUser(values.search);
-    setUsers(data.items);
+  const showDetails = (user) => {
+    console.log("USER", user);
+    history.push({ pathname: "/details", state: { user } });
+  };
+
+  const searchUsers = async (search) => {
+    const data = await Github.searchUser(search);
+    setUsers(await getUsers(data.items));
+    updateHistoryState(data.items);
+  };
+
+  const getUsers = async (arr) => {
+    const users = await Promise.all(
+      arr.map((user) => {
+        return Github.request(user.url);
+      })
+    );
+    console.log(users);
+    return users;
+  };
+
+  const updateHistoryState = (result) => {
     const state = { ...history.location.state };
-    state.users = data.items;
+    state.users = result;
     history.replace({ ...history.location, state });
   };
+
+  const _renderForm = ({ values, errors, isValid, dirty }) => (
+    <Form>
+      <Wrapper fill="fill" flow="row" align="center">
+        <If check={errors.search}>
+          <Icon name={codes.error} color="red" />
+        </If>
+        <Custom.Search
+          placeholder="Github user profile"
+          width="300px"
+          name="search"
+          type="search"
+        ></Custom.Search>
+        <SolidButton
+          type="submit"
+          margin="0 0 0 1em"
+          name="search"
+          disabled={!isValid || !dirty}
+        ></SolidButton>
+      </Wrapper>
+    </Form>
+  );
 
   const _renderHeader = () => (
     <NavigationBar
@@ -65,41 +107,25 @@ const SearchPage = () => {
         validationSchema={schema}
         initialValues={{ search: "" }}
         onSubmit={onSubmit}
-        render={({ values, errors, isValid, dirty }) => (
-          <Form>
-            <Wrapper fill="fill" flow="row" align="center">
-              <If check={errors.search}>
-                <Icon name={codes.error} color="red" />
-              </If>
-              <Custom.Search
-                placeholder="Github user profile"
-                width="300px"
-                name="search"
-                type="search"
-              ></Custom.Search>
-              <SolidButton
-                type="submit"
-                margin="0 0 0 1em"
-                name="search"
-                disabled={!isValid || !dirty}
-              ></SolidButton>
-            </Wrapper>
-          </Form>
-        )}
-      />
+      >
+        {_renderForm}
+      </Formik>
     </NavigationBar>
   );
 
-  const _renderStart = ({ avatar_url }) => (
+  const _renderListStart = ({ avatar_url }) => (
     <Styled.Avatar>
       <Styled.Image src={avatar_url}></Styled.Image>
     </Styled.Avatar>
   );
 
-  const _renderEnd = ({ followers_url, repos_url }) => (
-    <Text>
-      followers <strong>{0}</strong>
-    </Text>
+  const _renderListEnd = ({ public_repos }) => (
+    <Wrapper align="center">
+      <Text size="32px" weight="bold">
+        {public_repos}
+      </Text>
+      <Text size="12px">repositories</Text>
+    </Wrapper>
   );
 
   const _renderList = () => (
@@ -108,16 +134,20 @@ const SearchPage = () => {
         return (
           <ListItem
             key={user.id}
-            start={_renderStart(user)}
-            end={_renderEnd(user)}
-            action={() => history.push("/details")}
+            start={_renderListStart(user)}
+            end={_renderListEnd(user)}
+            action={() => showDetails(user)}
           >
             <Text mode="block" weight="bold">
               {user.login}
             </Text>
-            <Link url={user.html_url} size="12px">
+            <Link mode="block" url={user.html_url} size="12px">
               {user.html_url}
             </Link>
+            <Text size="12px">
+              {" "}
+              <strong>{user.followers}</strong> followers
+            </Text>
           </ListItem>
         );
       })}

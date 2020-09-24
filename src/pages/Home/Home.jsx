@@ -21,22 +21,58 @@ const schema = Yup.object().shape({
 });
 
 const HomePage = () => {
-  const [result, setResult] = useState(true);
+  const [searchResult, setSearchResult] = useState(true);
   const history = useHistory();
 
-  const onSubmit = async (values, actions) => {
-    const data = await Github.searchUser(values.search);
-    if (!data.items.length) {
-      setResult(false);
+  const onSubmit = (values, actions) => {
+    searchUsers(values.search);
+  };
+
+  const searchUsers = async (search) => {
+    const data = await Github.searchUser(search);
+    if (!data?.items?.length) {
+      setSearchResult(false);
     } else {
       history.push({
         pathname: "/search",
         state: {
-          users: data.items,
+          users: await getUsers(data.items),
         },
       });
     }
   };
+
+  const getUsers = async (arr) => {
+    return await Promise.all(
+      arr.map((user) => {
+        return Github.request(user.url);
+      })
+    );
+  };
+
+  const _renderForm = ({ values, isValid, dirty, isSubmitting }) => (
+    <Wrapper width="300px">
+      <Form>
+        <SpinLoading margin="2em auto" active={isSubmitting} />
+        <Custom.Search
+          placeholder="Github user profile"
+          block="block"
+          name="search"
+          type="search"
+        ></Custom.Search>
+        <Text margin="0 30px" size="12px" color="red">
+          <ErrorMessage name="search" />
+        </Text>
+        <SolidButton
+          block="block"
+          type="submit"
+          margin="1em 0 0 0"
+          name="search"
+          disabled={!isValid || !dirty}
+        ></SolidButton>
+      </Form>
+    </Wrapper>
+  );
 
   const _renderHeader = () => (
     <TextContainer mode="block" weight="bold" align="center">
@@ -49,38 +85,17 @@ const HomePage = () => {
           validationSchema={schema}
           initialValues={{ search: "" }}
           onSubmit={onSubmit}
-          render={({ values, isValid, dirty, isSubmitting }) => (
-            <Wrapper width="300px">
-              <Form>
-                <SpinLoading margin="2em auto" active={isSubmitting} />
-                <Custom.Search
-                  placeholder="Github user profile"
-                  block="block"
-                  name="search"
-                  type="search"
-                ></Custom.Search>
-                <Text margin="0 30px" size="12px" color="red">
-                  <ErrorMessage name="search" />
-                </Text>
-                <SolidButton
-                  block="block"
-                  type="submit"
-                  margin="1em 0 0 0"
-                  name="search"
-                  disabled={!isValid || !dirty}
-                ></SolidButton>
-              </Form>
-            </Wrapper>
-          )}
-        />
+        >
+          {_renderForm}
+        </Formik>
       </Wrapper>
     </TextContainer>
   );
 
   return (
-    <PageContainer color={colors.primaryColor} header={_renderHeader}>
+    <PageContainer header={_renderHeader}>
       <PageContent>
-        <If check={!result}>
+        <If check={!searchResult}>
           <Text weight="bold" margin="5em 0" mode="block" align="center">
             :( Sorry! We can't find any user with this name
           </Text>
