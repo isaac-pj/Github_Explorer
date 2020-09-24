@@ -18,14 +18,18 @@ const animate = css`
 export const Loader = styled.div`
   width: 30px;
   height: 30px;
-  border: solid 3px ${colors.primaryDarkColor};
+  border: solid 3px #00000030;
   margin: 0 auto;
   border-radius: 50%;
-  border-bottom-color: ${colors.secondaryColor};
   transform: scale(0, 0);
   transition: ease-out 0.5s;
 
+  ${({ color = colors.secondaryColor }) => `
+    border-bottom-color: ${color};
+  `}
+
   ${({ active }) => active && animate}
 
-  ${({ margin }) => margin && `margin: ${margin};`}
+  ${({ margin }) =>
+    margin && `margin: ${margin};`}
 `;
