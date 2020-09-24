@@ -7,25 +7,27 @@ import * as Yup from "yup";
 import * as Styled from "./Search.style";
 import colors from "../../theme/colors";
 import * as Github from "../../Services/Github/GithubService";
-import * as Custom from "../../Components/Styled/Custom.style";
+import * as Custom from "../../components/Styled/Custom.style";
 
-import PageContainer from "../../Components/Composed/PageContainer";
-import PageContent from "../../Components/Composed/PageContent";
-import ListItem from "../../Components/Composed/ListItem";
-import NavigationBar from "../../Components/Composed/NavigationBar";
-import { ClearButton, SolidButton } from "../../Components/Simples/Buttons";
-import { If, Wrapper } from "../../Components/Simples/Support";
-import { Text, Link } from "../../Components/Simples/Texts";
-// import { SpinLoading } from "../../Components/Simples/Loaders";
-import { Icon } from "../../Components/Simples/Icon";
-import codes from "../../Components/Simples/Icon/codes";
+import PageContainer from "../../components/Composed/PageContainer";
+import PageContent from "../../components/Composed/PageContent";
+import ListItem from "../../components/Composed/ListItem";
+import NavigationBar from "../../components/Composed/NavigationBar";
+import { ClearButton, SolidButton } from "../../components/Simples/Buttons";
+import { If, Wrapper } from "../../components/Simples/Support";
+import { Text, Link } from "../../components/Simples/Texts";
+import { SpinLoading } from "../../components/Simples/Loaders";
+import { Icon } from "../../components/Simples/Icon";
+import codes from "../../components/Simples/Icon/codes";
+import { Avatar } from "../../components/Simples/Avatar";
+import { Panel } from "../../components/Simples/Panel";
 
 const schema = Yup.object().shape({
   search: Yup.string().trim().required(),
 });
 
 const SearchPage = () => {
-  const [searchResult, setSearchResult] = useState([]);
+  const [isLoadingSearch, setIsLoadingSearch] = useState(false);
   const [users, setUsers] = useState([]);
   const history = useHistory();
 
@@ -47,9 +49,11 @@ const SearchPage = () => {
   };
 
   const searchUsers = async (search) => {
+    setIsLoadingSearch(true);
     const data = await Github.searchUser(search);
     setUsers(await getUsers(data.items));
     updateHistoryState(data.items);
+    setIsLoadingSearch(false);
   };
 
   const getUsers = async (arr) => {
@@ -113,11 +117,7 @@ const SearchPage = () => {
     </NavigationBar>
   );
 
-  const _renderListStart = ({ avatar_url }) => (
-    <Styled.Avatar>
-      <Styled.Image src={avatar_url}></Styled.Image>
-    </Styled.Avatar>
-  );
+  const _renderListStart = ({ avatar_url }) => <Avatar src={avatar_url} />;
 
   const _renderListEnd = ({ public_repos }) => (
     <Wrapper align="center">
@@ -157,8 +157,11 @@ const SearchPage = () => {
   return (
     <PageContainer color={colors.primaryColor} header={_renderHeader}>
       <PageContent>
-        <If check={users.length}>{_renderList()}</If>
-        <If check={!users.length}>
+        <SpinLoading margin="5em auto" active={isLoadingSearch} />
+        <If check={users.length && !isLoadingSearch}>
+          <Panel>{_renderList()}</Panel>
+        </If>
+        <If check={!users.length && !isLoadingSearch}>
           <Text weight="bold" margin="5em 0" mode="block" align="center">
             :( Sorry! We can't find any user with this name
           </Text>
