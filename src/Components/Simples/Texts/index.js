@@ -1,4 +1,5 @@
 import React from "react";
+import { noBubble } from "../../../utils/general";
 import * as Styled from "./styles";
 
 export const Text = (props) => (
@@ -10,7 +11,10 @@ export const TextContainer = (props) => (
 );
 
 export const Link = (props) => (
-  <Styled.Link {...props} onClick={() => window.open(props.url, "_blank")}>
+  <Styled.Link
+    {...props}
+    onClick={(e) => noBubble(e, () => window.open(props.url, "_blank"))}
+  >
     {props.children}
   </Styled.Link>
 );
