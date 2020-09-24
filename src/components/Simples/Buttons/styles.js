@@ -78,6 +78,7 @@ export const ButtonIcon = styled.button`
   position: relative;
   overflow: hidden;
   border: none;
+  cursor: pointer;
 
   ${({ margin }) =>
     margin &&

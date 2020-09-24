@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 
 import colors from "../../theme/colors";
 import * as Styled from "./Details.styles";
-import * as Github from "../../Services/Github/GithubService";
+import * as Github from "../../services/Github/GithubService";
 
 import PageContainer from "../../components/Composed/PageContainer";
 import NavigationBar from "../../components/Composed/NavigationBar";

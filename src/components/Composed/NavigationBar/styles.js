@@ -5,6 +5,7 @@ export const Container = styled.nav`
   display: flex;
   min-height: 60px;
   position: relative;
+  z-index: 10;
   box-shadow: 0 2px 5px #00000030;
   align-items: center;
   transition: background-color 0.3s ease;
