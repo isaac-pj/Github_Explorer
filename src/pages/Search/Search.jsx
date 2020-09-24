@@ -6,7 +6,7 @@ import * as Yup from "yup";
 
 import * as Styled from "./Search.style";
 import colors from "../../theme/colors";
-import * as Github from "../../Services/Github/GithubService";
+import * as Github from "../../services/Github/GithubService";
 import * as Custom from "../../components/Styled/Custom.style";
 
 import PageContainer from "../../components/Composed/PageContainer";
@@ -21,6 +21,7 @@ import { Icon } from "../../components/Simples/Icon";
 import codes from "../../components/Simples/Icon/codes";
 import { Avatar } from "../../components/Simples/Avatar";
 import { Panel } from "../../components/Simples/Panel";
+import { updateHistory } from "../../utils/general";
 
 const schema = Yup.object().shape({
   search: Yup.string().trim().required(),
@@ -41,6 +42,7 @@ const SearchPage = () => {
 
   const onSubmit = (values, actions) => {
     searchUsers(values.search);
+    updateHistory(values.search);
   };
 
   const showDetails = (user) => {

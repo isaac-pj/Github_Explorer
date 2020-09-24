@@ -6,7 +6,7 @@ import * as Yup from "yup";
 
 import * as Styled from "./Home.style";
 import colors from "../../theme/colors";
-import * as Github from "../../Services/Github/GithubService";
+import * as Github from "../../services/Github/GithubService";
 import * as Custom from "../../components/Styled/Custom.style";
 
 import PageContainer from "../../components/Composed/PageContainer";
@@ -15,6 +15,8 @@ import { SolidButton } from "../../components/Simples/Buttons";
 import { If, Wrapper } from "../../components/Simples/Support";
 import { TextContainer, Text } from "../../components/Simples/Texts";
 import { SpinLoading } from "../../components/Simples/Loaders";
+import PageNavigation from "../../components/Composed/PageNavigation";
+import { updateHistory } from "../../utils/general";
 
 const schema = Yup.object().shape({
   search: Yup.string().trim().required(),
@@ -27,6 +29,7 @@ const HomePage = () => {
 
   const onSubmit = (values, actions) => {
     searchUsers(values.search);
+    updateHistory(values.search);
   };
 
   const searchUsers = async (search) => {
@@ -97,6 +100,13 @@ const HomePage = () => {
 
   return (
     <PageContainer header={_renderHeader}>
+      <PageNavigation
+        pages={[
+          { url: "/home", name: "home", icon: "home" },
+          { url: "/history", name: "history", icon: "history" },
+          { url: "/ranking", name: "ranking", icon: "star" },
+        ]}
+      />
       <PageContent>
         <If check={!searchResult && !isLoadingSearch}>
           <Text weight="bold" margin="5em 0" mode="block" align="center">
