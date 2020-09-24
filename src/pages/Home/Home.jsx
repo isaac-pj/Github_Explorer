@@ -7,14 +7,14 @@ import * as Yup from "yup";
 import * as Styled from "./Home.style";
 import colors from "../../theme/colors";
 import * as Github from "../../Services/Github/GithubService";
-import * as Custom from "../../Components/Styled/Custom.style";
+import * as Custom from "../../components/Styled/Custom.style";
 
-import PageContainer from "../../Components/Composed/PageContainer";
-import PageContent from "../../Components/Composed/PageContent";
-import { SolidButton } from "../../Components/Simples/Buttons";
-import { If, Wrapper } from "../../Components/Simples/Support";
-import { TextContainer, Text } from "../../Components/Simples/Texts";
-import { SpinLoading } from "../../Components/Simples/Loaders";
+import PageContainer from "../../components/Composed/PageContainer";
+import PageContent from "../../components/Composed/PageContent";
+import { SolidButton } from "../../components/Simples/Buttons";
+import { If, Wrapper } from "../../components/Simples/Support";
+import { TextContainer, Text } from "../../components/Simples/Texts";
+import { SpinLoading } from "../../components/Simples/Loaders";
 
 const schema = Yup.object().shape({
   search: Yup.string().trim().required(),
@@ -22,6 +22,7 @@ const schema = Yup.object().shape({
 
 const HomePage = () => {
   const [searchResult, setSearchResult] = useState(true);
+  const [isLoadingSearch, setIsLoadingSearch] = useState(false);
   const history = useHistory();
 
   const onSubmit = (values, actions) => {
@@ -29,6 +30,7 @@ const HomePage = () => {
   };
 
   const searchUsers = async (search) => {
+    setIsLoadingSearch(true);
     const data = await Github.searchUser(search);
     if (!data?.items?.length) {
       setSearchResult(false);
@@ -40,6 +42,7 @@ const HomePage = () => {
         },
       });
     }
+    setIsLoadingSearch(false);
   };
 
   const getUsers = async (arr) => {
@@ -51,9 +54,8 @@ const HomePage = () => {
   };
 
   const _renderForm = ({ values, isValid, dirty, isSubmitting }) => (
-    <Wrapper width="300px">
+    <Wrapper width="300px" margin="3em 0">
       <Form>
-        <SpinLoading margin="2em auto" active={isSubmitting} />
         <Custom.Search
           placeholder="Github user profile"
           block="block"
@@ -71,6 +73,7 @@ const HomePage = () => {
           disabled={!isValid || !dirty}
         ></SolidButton>
       </Form>
+      <SpinLoading margin="5em auto" active={isLoadingSearch} />
     </Wrapper>
   );
 
@@ -95,7 +98,7 @@ const HomePage = () => {
   return (
     <PageContainer header={_renderHeader}>
       <PageContent>
-        <If check={!searchResult}>
+        <If check={!searchResult && !isLoadingSearch}>
           <Text weight="bold" margin="5em 0" mode="block" align="center">
             :( Sorry! We can't find any user with this name
           </Text>
