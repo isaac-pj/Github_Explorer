@@ -22,6 +22,8 @@ import {
 } from "../../components/Simples/Selects";
 import { LANGUAGES, SINCE } from "../../enums/general.enum";
 import { noBubble } from "../../utils/general";
+import ListUsers from "../../components/Composed/ListUsers";
+import BackButton from "../../components/Composed/BackButton";
 
 const Ranking = () => {
   const history = useHistory();
@@ -44,19 +46,9 @@ const Ranking = () => {
 
   const onSubmit = (e) => noBubble(e, loadData);
 
-  const showDetails = (user) => {
-    history.push({ pathname: "/details", state: { user } });
-  };
-
   const _renderHeader = () => (
     <NavigationBar
-      start={
-        <ClearButton
-          action={() => history.goBack()}
-          name="back"
-          color={colors.textDark}
-        />
-      }
+      start={<BackButton history={history} color={colors.textDark} />}
       end={
         <Text weight="bold" margin="1em 0 0 0" size="24px" children="GitHub" />
       }
@@ -101,40 +93,6 @@ const Ranking = () => {
     </Wrapper>
   );
 
-  const _renderListStart = ({ avatar_url }) => <Avatar src={avatar_url} />;
-
-  const _renderListEnd = ({ public_repos }) => (
-    <Wrapper align="center">
-      <Text size="32px" weight="bold">
-        {public_repos}
-      </Text>
-      <Text size="12px">repositories</Text>
-    </Wrapper>
-  );
-
-  const _renderList = () => (
-    <Styled.ListView>
-      {users.map((user) => (
-        <ListItem
-          key={user.id}
-          start={_renderListStart(user)}
-          end={_renderListEnd(user)}
-          action={() => showDetails(user)}
-        >
-          <Wrapper>
-            <Text weight="bold">{user.login}</Text>
-            <Link url={user.html_url} size="12px">
-              {user.html_url}
-            </Link>
-            <Text size="12px">
-              <strong>{user.followers}</strong> followers
-            </Text>
-          </Wrapper>
-        </ListItem>
-      ))}
-    </Styled.ListView>
-  );
-
   return (
     <PageContainer header={_renderHeader}>
       <PageNavigation
@@ -150,7 +108,9 @@ const Ranking = () => {
         </Wrapper>
         <Panel>
           <SpinLoading margin="5em auto" active={isLoadingSearch} />
-          <If check={!isLoadingSearch}>{_renderList()}</If>
+          <If check={!isLoadingSearch}>
+            <ListUsers users={users} history={history} />
+          </If>
           <If check={!users.length && !isLoadingSearch}>
             <Text weight="bold" margin="5em 0" mode="block" align="center">
               :( Sorry! nothing to show

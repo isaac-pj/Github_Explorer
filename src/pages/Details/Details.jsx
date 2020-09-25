@@ -19,6 +19,7 @@ import codes from "../../components/Simples/Icon/codes";
 import { Icon } from "../../components/Simples/Icon";
 import { ORDER } from "../../enums/general.enum";
 import { SpinLoading } from "../../components/Simples/Loaders";
+import BackButton from "../../components/Composed/BackButton";
 
 export const DetailsPage = (props) => {
   const [user, setUser] = useState({});
@@ -74,13 +75,7 @@ export const DetailsPage = (props) => {
 
   const _renderHeader = () => (
     <NavigationBar
-      start={
-        <ClearButton
-          action={() => history.goBack()}
-          name="back"
-          color={colors.textDark}
-        />
-      }
+      start={<BackButton history={history} color={colors.textDark} />}
       end={
         <Text weight="bold" margin="1em 0 0 0" size="24px" children="GitHub" />
       }
