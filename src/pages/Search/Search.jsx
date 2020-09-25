@@ -24,6 +24,7 @@ import { Panel } from "../../components/Simples/Panel";
 import { updateHistory } from "../../utils/general";
 import BackButton from "../../components/Composed/BackButton";
 import { MEDIA } from "../../enums/general.enum";
+import ListUsers from "../../components/Composed/ListUsers";
 
 const schema = Yup.object().shape({
   search: Yup.string().trim().required(),
@@ -45,11 +46,6 @@ const SearchPage = () => {
   const onSubmit = (values, actions) => {
     searchUsers(values.search);
     updateHistory(values.search);
-  };
-
-  const showDetails = (user) => {
-    console.log("USER", user);
-    history.push({ pathname: "/details", state: { user } });
   };
 
   const searchUsers = async (search) => {
@@ -122,42 +118,6 @@ const SearchPage = () => {
     </Wrapper>
   );
 
-  const _renderListStart = ({ avatar_url }) => <Avatar src={avatar_url} />;
-
-  const _renderListEnd = ({ public_repos }) => (
-    <Wrapper align="center">
-      <Text size="32px" weight="bold">
-        {public_repos}
-      </Text>
-      <Text size="12px">repositories</Text>
-    </Wrapper>
-  );
-
-  const _renderList = () => (
-    <Styled.ListView>
-      {users.map((user) => {
-        return (
-          <ListItem
-            key={user.id}
-            start={_renderListStart(user)}
-            end={_renderListEnd(user)}
-            action={() => showDetails(user)}
-          >
-            <Wrapper>
-              <Text weight="bold">{user.login}</Text>
-              <Link url={user.html_url} size="12px">
-                {user.html_url}
-              </Link>
-              <Text size="12px">
-                <strong>{user.followers}</strong> followers
-              </Text>
-            </Wrapper>
-          </ListItem>
-        );
-      })}
-    </Styled.ListView>
-  );
-
   return (
     <PageContainer
       color={colors.primaryColor}
@@ -167,7 +127,9 @@ const SearchPage = () => {
       <PageContent>
         <SpinLoading margin="5em auto" active={isLoadingSearch} />
         <If check={users.length && !isLoadingSearch}>
-          <Panel>{_renderList()}</Panel>
+          <Panel>
+            <ListUsers users={users} history={history} />
+          </Panel>
         </If>
         <If check={!users.length && !isLoadingSearch}>
           <Text weight="bold" margin="5em 0" mode="block" align="center">
