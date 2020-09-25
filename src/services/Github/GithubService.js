@@ -15,7 +15,14 @@ const config = {
 };
 
 export const searchUser = async (string) => {
-  const response = await api.get(`/search/users?q=${string}&page=0&per_page=3`);
+  const response = await api.get(
+    `/search/users?q=${string}&page=0&per_page=10`
+  );
+  return response.data;
+};
+
+export const getUser = async (username) => {
+  const response = await api.get(`/users/${username}`);
   return response.data;
 };
 
@@ -24,6 +31,22 @@ export const getRepos = async (user, sort = "created", direction = "desc") => {
     `/users/${user}/repos?per_page=10&sort=${sort}&direction=${direction}`
   );
   return response.data;
+};
+
+// export const getRanking = async (language, since) => {
+//   const response = await axios.get(
+//     `https://ghapi.huchen.dev/developers?language=${language}&since=${since}`
+//   );
+
+//   return response.data;
+// };
+
+export const getRanking = async () => {
+  const response = await axios.get(`https://ghapi.huchen.dev/developers`);
+  const data = await Promise.all(
+    response.data.map((user) => getUser(user.username))
+  );
+  return data.slice(0, 5);
 };
 
 export const request = async (url) => {
