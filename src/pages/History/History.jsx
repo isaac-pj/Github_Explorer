@@ -10,12 +10,15 @@ import NavigationBar from "../../components/Composed/NavigationBar";
 import PageContent from "../../components/Composed/PageContent";
 import PageNavigation from "../../components/Composed/PageNavigation";
 import { ClearButton } from "../../components/Simples/Buttons";
-import { If, Wrapper } from "../../components/Simples/Support";
-import { Text } from "../../components/Simples/Texts";
+import { Hide, If, Wrapper } from "../../components/Simples/Support";
+import { Link, Text } from "../../components/Simples/Texts";
 import { Panel } from "../../components/Simples/Panel";
 import ListItem from "../../components/Composed/ListItem";
 import colors from "../../theme/colors";
 import { SpinLoading } from "../../components/Simples/Loaders";
+import { MEDIA } from "../../enums/general.enum";
+import BasicHeader from "../../components/Composed/BasicHeader";
+import BasicFooter from "../../components/Composed/BasicFooter";
 
 const HistoryPage = () => {
   const history = useHistory();
@@ -58,30 +61,10 @@ const HistoryPage = () => {
     setSearchHistory([]);
   };
 
-  const _renderHeader = () => (
-    <NavigationBar
-      start={
-        <ClearButton
-          action={() => history.goBack()}
-          name="back"
-          color={colors.textDark}
-        />
-      }
-      end={
-        <Text weight="bold" margin="1em 0 0 0" size="24px" children="GitHub" />
-      }
-    >
-      <Wrapper align="center" fill="fill">
-        <Text size="20px" transform="uppercase" weight="bold">
-          History Search
-        </Text>
-      </Wrapper>
-    </NavigationBar>
-  );
-
   const _renderHistoryList = () =>
     searchHistory.map((item) => (
       <ListItem
+        adapt={true}
         end={
           <Text size="14px">
             {moment(item.date).format("MMMM Do YYYY, h:mm")}
@@ -97,7 +80,10 @@ const HistoryPage = () => {
     ));
 
   return (
-    <PageContainer header={_renderHeader}>
+    <PageContainer
+      header={() => <BasicHeader title="History Search" history={history} />}
+      footer={() => <BasicFooter />}
+    >
       <PageNavigation
         pages={[
           { url: "/home", name: "home", icon: "home" },

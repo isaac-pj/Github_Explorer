@@ -8,7 +8,7 @@ import * as Github from "../../services/Github/GithubService";
 import PageContainer from "../../components/Composed/PageContainer";
 import NavigationBar from "../../components/Composed/NavigationBar";
 import { ClearButton } from "../../components/Simples/Buttons";
-import { If, Wrapper } from "../../components/Simples/Support";
+import { Hide, If, Wrapper } from "../../components/Simples/Support";
 import { Link, Text } from "../../components/Simples/Texts";
 import PageContent from "../../components/Composed/PageContent";
 import { Avatar } from "../../components/Simples/Avatar";
@@ -17,9 +17,11 @@ import { Grid, GridItem } from "../../components/Simples/Grid";
 import ListItem from "../../components/Composed/ListItem";
 import codes from "../../components/Simples/Icon/codes";
 import { Icon } from "../../components/Simples/Icon";
-import { ORDER } from "../../enums/general.enum";
+import { MEDIA, ORDER } from "../../enums/general.enum";
 import { SpinLoading } from "../../components/Simples/Loaders";
 import BackButton from "../../components/Composed/BackButton";
+import BasicHeader from "../../components/Composed/BasicHeader";
+import BasicFooter from "../../components/Composed/BasicFooter";
 
 export const DetailsPage = (props) => {
   const [user, setUser] = useState({});
@@ -63,33 +65,25 @@ export const DetailsPage = (props) => {
 
   const _renderRepos = () =>
     repos.map((repo) => (
-      <ListItem start={<Icon size="32px" name={codes.folder} />} key={repo.id}>
-        <Wrapper>
+      <ListItem
+        adapt={true}
+        start={<Icon size="32px" name={codes.folder} />}
+        key={repo.id}
+      >
+        <Styled.ResposiveWrapper>
           <Text weight="bold">{repo.name}</Text>
           <Link url={repo.html_url} size="12px">
             {repo.html_url}
           </Link>
-        </Wrapper>
+        </Styled.ResposiveWrapper>
       </ListItem>
     ));
 
-  const _renderHeader = () => (
-    <NavigationBar
-      start={<BackButton history={history} color={colors.textDark} />}
-      end={
-        <Text weight="bold" margin="1em 0 0 0" size="24px" children="GitHub" />
-      }
-    >
-      <Wrapper align="center" fill="fill">
-        <Text size="20px" transform="uppercase" weight="bold">
-          Profile Details
-        </Text>
-      </Wrapper>
-    </NavigationBar>
-  );
-
   return (
-    <PageContainer header={_renderHeader}>
+    <PageContainer
+      header={() => <BasicHeader title="Profile Details" history={history} />}
+      footer={() => <BasicFooter />}
+    >
       <PageContent>
         <Panel>
           <Grid gap="15px" rows="repeat(5, auto)">

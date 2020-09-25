@@ -25,6 +25,7 @@ import { updateHistory } from "../../utils/general";
 import BackButton from "../../components/Composed/BackButton";
 import { MEDIA } from "../../enums/general.enum";
 import ListUsers from "../../components/Composed/ListUsers";
+import BasicFooter from "../../components/Composed/BasicFooter";
 
 const schema = Yup.object().shape({
   search: Yup.string().trim().required(),
@@ -101,6 +102,19 @@ const SearchPage = () => {
   const _renderHeader = () => (
     <NavigationBar
       start={<BackButton history={history} color={colors.textDark} />}
+      end={
+        <Hide max={MEDIA.SM}>
+          <Link
+            clear={true}
+            url="https://github.com"
+            weight="bold"
+            margin="1em 0 0 0"
+            size="24px"
+            children="GitHub"
+          />
+        </Hide>
+      }
+      padding="0 3em "
     >
       <Formik
         validationSchema={schema}
@@ -112,17 +126,11 @@ const SearchPage = () => {
     </NavigationBar>
   );
 
-  const _renderFooter = () => (
-    <Wrapper fill="fill" align="center">
-      <Text weight="bold" margin="1em" size="18px" children="GitHub" />
-    </Wrapper>
-  );
-
   return (
     <PageContainer
       color={colors.primaryColor}
       header={_renderHeader}
-      footer={_renderFooter}
+      footer={() => <BasicFooter />}
     >
       <PageContent>
         <SpinLoading margin="5em auto" active={isLoadingSearch} />

@@ -24,6 +24,8 @@ import { LANGUAGES, SINCE } from "../../enums/general.enum";
 import { noBubble } from "../../utils/general";
 import ListUsers from "../../components/Composed/ListUsers";
 import BackButton from "../../components/Composed/BackButton";
+import BasicHeader from "../../components/Composed/BasicHeader";
+import BasicFooter from "../../components/Composed/BasicFooter";
 
 const Ranking = () => {
   const history = useHistory();
@@ -45,21 +47,6 @@ const Ranking = () => {
   };
 
   const onSubmit = (e) => noBubble(e, loadData);
-
-  const _renderHeader = () => (
-    <NavigationBar
-      start={<BackButton history={history} color={colors.textDark} />}
-      end={
-        <Text weight="bold" margin="1em 0 0 0" size="24px" children="GitHub" />
-      }
-    >
-      <Wrapper align="center" fill="fill">
-        <Text size="20px" transform="uppercase" weight="bold">
-          Developers Ranking
-        </Text>
-      </Wrapper>
-    </NavigationBar>
-  );
 
   const _renderForm = () => (
     <Wrapper width="300px" margin="0 0 3em 0">
@@ -94,7 +81,10 @@ const Ranking = () => {
   );
 
   return (
-    <PageContainer header={_renderHeader}>
+    <PageContainer
+      header={() => <BasicHeader title="History Search" history={history} />}
+      footer={() => <BasicFooter />}
+    >
       <PageNavigation
         pages={[
           { url: "/home", name: "home", icon: "home" },
