@@ -62,7 +62,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Media = styled.div`
-  display: inline-block;
+  display: block;
   ${({ min }) =>
     min &&
     `

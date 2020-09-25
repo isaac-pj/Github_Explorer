@@ -2,6 +2,8 @@ import styled from "styled-components";
 import colors from "../../../theme/colors";
 
 export const Panel = styled.section`
+  overflow: hidden;
+
   ${({ radius = "20px" }) => `
     border-radius: ${radius};
   `}

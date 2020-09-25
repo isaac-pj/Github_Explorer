@@ -16,6 +16,9 @@ const pulse = keyframes`
 `;
 
 export const Text = styled.span`
+  text-overflow: ellipsis;
+  word-break: break-all;
+
   ${({ transform }) =>
     transform &&
     `
@@ -60,14 +63,19 @@ export const Text = styled.span`
 `;
 
 export const Link = styled(Text)`
-  text-decoration: underline;
-  color: ${colors.secondaryColor} !important;
   cursor: pointer;
 
   ${({ blink }) =>
     blink &&
     `
       animation: ${pulse} 1s linear infinite;
+  `}
+
+  ${({ clear }) =>
+    !clear &&
+    `
+    text-decoration: underline;
+    color: ${colors.secondaryColor} !important;
   `}
 `;
 

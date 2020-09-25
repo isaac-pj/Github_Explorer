@@ -30,30 +30,25 @@ export const GridContainer = styled.section`
 
 export const GridWrapper = styled.div`
   display: flex;
-  /* justify-content: center; */
-  /* align-items: ; */
-
+  flex-wrap: wrap;
   ${({ align = "flex-end", justify = "center" }) =>
     `
     justify-content: ${justify};
     align-items: ${align};
   `}
-
   ${({ padding }) =>
     padding &&
     `
-        padding: ${padding};
-    `}
-
+      padding: ${padding};
+  `}
     ${({ column }) =>
     column &&
     `
-        grid-column: ${column};
-    `}
-
+      grid-column: ${column};
+  `}
     ${({ row }) =>
     row &&
     `
-        grid-row: ${row};
-    `}
+      grid-row: ${row};
+  `};
 `;
