@@ -57,7 +57,7 @@ const HomePage = () => {
   };
 
   const _renderForm = ({ values, isValid, dirty, isSubmitting }) => (
-    <Wrapper width="90%" maxWidth="300px" margin="3em 0">
+    <Wrapper width="90%" maxWidth="300px" margin="3em 0 0 0">
       <Form>
         <Wrapper fill="fill">
           <Custom.Search
@@ -77,7 +77,6 @@ const HomePage = () => {
           disabled={!isValid || !dirty}
         ></SolidButton>
       </Form>
-      <SpinLoading margin="5em auto" active={isLoadingSearch} />
     </Wrapper>
   );
 
@@ -109,6 +108,7 @@ const HomePage = () => {
         ]}
       />
       <PageContent>
+        <SpinLoading margin="1em auto" active={isLoadingSearch} />
         <If check={!searchResult && !isLoadingSearch}>
           <Text weight="bold" margin="5em 0" mode="block" align="center">
             :( Sorry! We can't find any user with this name
