@@ -17,7 +17,7 @@ const pulse = keyframes`
 
 export const Text = styled.span`
   text-overflow: ellipsis;
-  word-break: break-all;
+  word-break: normal;
 
   ${({ transform }) =>
     transform &&
@@ -64,6 +64,7 @@ export const Text = styled.span`
 
 export const Link = styled(Text)`
   cursor: pointer;
+  word-break: break-all;
 
   ${({ blink }) =>
     blink &&

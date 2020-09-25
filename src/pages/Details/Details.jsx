@@ -138,6 +138,11 @@ export const DetailsPage = (props) => {
           <Styled.ListView>
             <SpinLoading margin="5em auto" active={isLoadingRepos} />
             <If check={!isLoadingRepos}>{_renderRepos()}</If>
+            <If check={!repos.length && !isLoadingRepos}>
+              <Text weight="bold" margin="5em 0" mode="block" align="center">
+                :( Sorry! nothing to show
+              </Text>
+            </If>
           </Styled.ListView>
         </Panel>
       </PageContent>

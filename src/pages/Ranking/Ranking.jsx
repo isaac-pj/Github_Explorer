@@ -49,7 +49,7 @@ const Ranking = () => {
   const onSubmit = (e) => noBubble(e, loadData);
 
   const _renderForm = () => (
-    <Wrapper width="300px" margin="0 0 3em 0">
+    <Wrapper width="90%" maxWidth="300px" margin="0 0 3em 0">
       <form>
         <InputCreatableSelect
           hint="Language"
