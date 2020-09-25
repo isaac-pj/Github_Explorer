@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Field } from "formik";
 import colors from "../../theme/colors";
+import { MEDIA } from "../../enums/general.enum";
 
 export const Search = styled(Field)`
   height: 40px;
@@ -34,4 +35,8 @@ export const Search = styled(Field)`
     `
     width: ${width};
   `}
+
+  @media (max-width: ${MEDIA.SM}) {
+    width: 100%;
+  }
 `;
