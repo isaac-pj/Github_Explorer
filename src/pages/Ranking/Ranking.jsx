@@ -82,7 +82,9 @@ const Ranking = () => {
 
   return (
     <PageContainer
-      header={() => <BasicHeader title="History Search" history={history} />}
+      header={() => (
+        <BasicHeader title="Developers Ranking" history={history} />
+      )}
       footer={() => <BasicFooter />}
     >
       <PageNavigation

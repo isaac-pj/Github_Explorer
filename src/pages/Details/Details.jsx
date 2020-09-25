@@ -101,20 +101,20 @@ export const DetailsPage = (props) => {
               </Wrapper>
             </GridItem>
             <GridItem>
-              <Text margin="0 1em">
+              <Styled.ResposiveText align="center" margin="0 1em">
                 followers <strong>{user.followers}</strong>
-              </Text>
-              <Text margin="0 1em">
+              </Styled.ResposiveText>
+              <Styled.ResposiveText align="center" margin="0 1em">
                 following <strong>{user.following}</strong>
-              </Text>
-              <Text margin="0 1em">
+              </Styled.ResposiveText>
+              <Styled.ResposiveText align="center" margin="0 1em">
                 gists <strong>{user.public_gists}</strong>
-              </Text>
+              </Styled.ResposiveText>
             </GridItem>
             <GridItem check={user.bio}>
-              <Text margin="0 5em" size="14px">
+              <Styled.ResposiveText margin="0 5em" size="14px">
                 {user.bio}
-              </Text>
+              </Styled.ResposiveText>
             </GridItem>
             <GridItem check={user.email}>
               <Text size="14px" weight="bold">
