@@ -123,8 +123,8 @@ const Ranking = () => {
         >
           <Wrapper>
             <Text weight="bold">{user.login}</Text>
-            <Link url={user.url} size="12px">
-              {user.url}
+            <Link url={user.html_url} size="12px">
+              {user.html_url}
             </Link>
             <Text size="12px">
               <strong>{user.followers}</strong> followers
