@@ -10,12 +10,12 @@ export const Search = styled(Field)`
   font-weight: bold;
   background-color: ${colors.shadeMedium};
   border: none;
-  border: solid 2px ${colors.primaryDarkColor};
+  border: solid 2px #00000020;
   border-radius: 20px;
 
   &:focus {
     outline: none;
-    border: solid 2px ${colors.primaryLightColor};
+    border: solid 2px ${colors.secondaryColor};
   }
 
   &::placeholder {
