@@ -33,16 +33,10 @@ export const getRepos = async (user, sort = "created", direction = "desc") => {
   return response.data;
 };
 
-// export const getRanking = async (language, since) => {
-//   const response = await axios.get(
-//     `https://ghapi.huchen.dev/developers?language=${language}&since=${since}`
-//   );
-
-//   return response.data;
-// };
-
-export const getRanking = async () => {
-  const response = await axios.get(`https://ghapi.huchen.dev/developers`);
+export const getRanking = async (language, since) => {
+  const response = await axios.get(
+    `https://ghapi.huchen.dev/developers?language=${language}&since=${since}`
+  );
   const data = await Promise.all(
     response.data.map((user) => getUser(user.username))
   );

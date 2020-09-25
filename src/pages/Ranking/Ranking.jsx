@@ -2,15 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import * as Styled from "./Ranking.style";
-import * as Custom from "../../components/Styled/Custom.style";
-import { ErrorMessage, Form, Formik } from "formik";
 
 import PageContainer from "../../components/Composed/PageContainer";
 import NavigationBar from "../../components/Composed/NavigationBar";
 import PageContent from "../../components/Composed/PageContent";
 import PageNavigation from "../../components/Composed/PageNavigation";
 import { ClearButton, SolidButton } from "../../components/Simples/Buttons";
-import { Wrapper } from "../../components/Simples/Support";
+import { If, Wrapper } from "../../components/Simples/Support";
 import ListItem from "../../components/Composed/ListItem";
 import { Panel } from "../../components/Simples/Panel";
 import { Link, Text } from "../../components/Simples/Texts";
@@ -18,18 +16,33 @@ import colors from "../../theme/colors";
 import * as Github from "../../services/Github/GithubService";
 import { Avatar } from "../../components/Simples/Avatar";
 import { SpinLoading } from "../../components/Simples/Loaders";
+import {
+  InputCreatableSelect,
+  InputSelect,
+} from "../../components/Simples/Selects";
+import { LANGUAGES, SINCE } from "../../enums/general.enum";
+import { noBubble } from "../../utils/general";
 
 const Ranking = () => {
   const history = useHistory();
   const [users, setUsers] = useState([]);
   const [isLoadingSearch, setIsLoadingSearch] = useState(true);
+  const [language, setLanguage] = useState({ value: "", label: "All" });
+  const [since, setSince] = useState({ value: "", label: "Daily" });
 
   useEffect(() => {
     (async () => {
-      setUsers(await Github.getRanking());
-      setIsLoadingSearch(false);
+      loadData();
     })();
   }, []);
+
+  const loadData = async () => {
+    setIsLoadingSearch(true);
+    setUsers(await Github.getRanking(language.value, since.value));
+    setIsLoadingSearch(false);
+  };
+
+  const onSubmit = (e) => noBubble(e, loadData);
 
   const showDetails = (user) => {
     history.push({ pathname: "/details", state: { user } });
@@ -56,29 +69,37 @@ const Ranking = () => {
     </NavigationBar>
   );
 
-  // const _renderForm = ({ values, isValid, dirty, isSubmitting }) => (
-  //   <Wrapper width="300px" margin="3em 0">
-  //     <Form>
-  //       <Custom.Search
-  //         placeholder="Github user profile"
-  //         block="block"
-  //         name="search"
-  //         type="search"
-  //       ></Custom.Search>
-  //       <Text margin="0 30px" size="12px" color="red">
-  //         <ErrorMessage name="search" />
-  //       </Text>
-  //       <SolidButton
-  //         block="block"
-  //         type="submit"
-  //         margin="1em 0 0 0"
-  //         name="search"
-  //         disabled={!isValid || !dirty}
-  //       ></SolidButton>
-  //     </Form>
-  //     <SpinLoading margin="5em auto" active={isLoadingSearch} />
-  //   </Wrapper>
-  // );
+  const _renderForm = () => (
+    <Wrapper width="300px" margin="0 0 3em 0">
+      <form>
+        <InputCreatableSelect
+          hint="Language"
+          options={LANGUAGES}
+          action={(selectedOption) => setLanguage(selectedOption)}
+          name="language"
+          type="text"
+        />
+        <InputSelect
+          margin="1em 0"
+          hint="Since"
+          options={SINCE}
+          action={(selectedOption) => setSince(selectedOption)}
+          name="since"
+          type="text"
+        />
+
+        <Wrapper fill="fill" align="center">
+          <SolidButton
+            type="submit"
+            margin="1em 0 0 0"
+            name="rank"
+            action={onSubmit}
+            disabled={!language.value && !since.value}
+          ></SolidButton>
+        </Wrapper>
+      </form>
+    </Wrapper>
+  );
 
   const _renderListStart = ({ avatar_url }) => <Avatar src={avatar_url} />;
 
@@ -124,18 +145,17 @@ const Ranking = () => {
         ]}
       />
       <PageContent>
-        {/* <Wrapper fill="fill" align="center">
-          <Formik
-            // validationSchema={schema}
-            initialValues={{ laguage: "", since: "" }}
-            // onSubmit={onSubmit}
-          >
-            {_renderForm}
-          </Formik>
-        </Wrapper> */}
+        <Wrapper fill="fill" align="center">
+          {_renderForm()}
+        </Wrapper>
         <Panel>
           <SpinLoading margin="5em auto" active={isLoadingSearch} />
-          {_renderList()}
+          <If check={!isLoadingSearch}>{_renderList()}</If>
+          <If check={!users.length && !isLoadingSearch}>
+            <Text weight="bold" margin="5em 0" mode="block" align="center">
+              :( Sorry! nothing to show
+            </Text>
+          </If>
         </Panel>
       </PageContent>
     </PageContainer>
