@@ -60,3 +60,21 @@ export const Wrapper = styled.div`
     background-color: ${color};
   `}
 `;
+
+export const Media = styled.div`
+  display: inline-block;
+  ${({ min }) =>
+    min &&
+    `
+    @media (min-width: ${min}) {
+      display: none;
+    }
+  `}
+  ${({ max }) =>
+    max &&
+    `
+    @media (max-width: ${max}) {
+      display: none;
+    }
+  `};
+`;
