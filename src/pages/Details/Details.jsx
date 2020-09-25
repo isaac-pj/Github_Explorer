@@ -86,7 +86,7 @@ export const DetailsPage = (props) => {
       }
     >
       <Wrapper align="center" fill="fill">
-        <Text size="32px" weight="bold">
+        <Text size="20px" transform="uppercase" weight="bold">
           Profile Details
         </Text>
       </Wrapper>

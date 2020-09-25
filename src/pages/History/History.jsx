@@ -72,7 +72,7 @@ const HistoryPage = () => {
       }
     >
       <Wrapper align="center" fill="fill">
-        <Text size="32px" weight="bold">
+        <Text size="20px" transform="uppercase" weight="bold">
           History Search
         </Text>
       </Wrapper>

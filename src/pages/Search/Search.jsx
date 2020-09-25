@@ -146,7 +146,6 @@ const SearchPage = () => {
                 {user.html_url}
               </Link>
               <Text size="12px">
-                {" "}
                 <strong>{user.followers}</strong> followers
               </Text>
             </Wrapper>

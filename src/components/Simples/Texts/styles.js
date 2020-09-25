@@ -16,6 +16,12 @@ const pulse = keyframes`
 `;
 
 export const Text = styled.span`
+  ${({ transform }) =>
+    transform &&
+    `
+    text-transform: ${transform} !important;
+  `}
+
   ${({ align }) =>
     align &&
     `
