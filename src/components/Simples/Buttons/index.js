@@ -34,7 +34,26 @@ export const ClearButton = ({
 );
 
 export const IconSolidButton = ({ action, icon, size, ...props }) => (
-  <Styled.ButtonIcon {...props} onClick={(event) => noBubble(event, action)}>
+  <Styled.ButtonIcon
+    size={size}
+    {...props}
+    onClick={(event) => noBubble(event, action)}
+  >
+    <Icon
+      name={icon.name || icon}
+      color={icon.color}
+      size={icon.size || parseInt(size) < 40 ? "18px" : "24px"}
+    />
+  </Styled.ButtonIcon>
+);
+
+export const IconClearButton = ({ action, icon, size, ...props }) => (
+  <Styled.ButtonIcon
+    size={size}
+    {...props}
+    onClick={(event) => noBubble(event, action)}
+    fill="clear"
+  >
     <Icon
       name={icon.name || icon}
       color={icon.color}

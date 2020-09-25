@@ -137,4 +137,16 @@ export const ButtonIcon = styled.button`
   &:disabled {
     opacity: 0.5;
   }
+
+  ${({ fill, theme = "dark", color = colors.secondaryColor }) =>
+    fill === "clear" &&
+    `
+    color: ${theme === "clear" ? colors.textLight : color};
+    background-color: transparent;
+    border: none;
+
+    &:hover:not(:disabled) {
+      background-color: #00000010;
+    }
+  `}
 `;
