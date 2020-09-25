@@ -20,3 +20,11 @@ export const SINCE = [
   { value: "weekly", label: "Weekly" },
   { value: "monthly", label: "Monthly" },
 ];
+
+export const MEDIA = {
+  XS: "496px",
+  SM: "768px",
+  MD: "1024px",
+  LG: "1200px",
+  XL: "1201px",
+};

@@ -6,4 +6,5 @@ export const Image = styled.img`
   position: absolute;
   bottom: 0;
   opacity: 0.1;
+  pointer-events: none;
 `;
