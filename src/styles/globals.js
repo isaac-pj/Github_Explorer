@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import colors from "../theme/colors";
 
 export default createGlobalStyle`
   * {
@@ -9,6 +10,7 @@ export default createGlobalStyle`
   }
   body {
     -webkit-font-smoothing: antialiased !important;
+    background-color: ${colors.primaryColor}
   }
   body html #root {
     height: 100%;

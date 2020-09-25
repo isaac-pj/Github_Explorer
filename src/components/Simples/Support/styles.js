@@ -2,9 +2,8 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   display: inline-flex;
-  flex-direction: column;
 
-  ${({ flow }) =>
+  ${({ flow = "column" }) =>
     flow &&
     `
     flex-direction: ${flow};
@@ -47,6 +46,12 @@ export const Wrapper = styled.div`
     width &&
     `
     width: ${width};
+  `}
+
+  ${({ maxWidth }) =>
+    maxWidth &&
+    `
+    max-width: ${maxWidth};
   `}
 
   ${({ color }) =>

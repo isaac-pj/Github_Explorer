@@ -57,17 +57,18 @@ const HomePage = () => {
   };
 
   const _renderForm = ({ values, isValid, dirty, isSubmitting }) => (
-    <Wrapper width="300px" margin="3em 0">
+    <Wrapper width="90%" maxWidth="300px" margin="3em 0">
       <Form>
-        <Custom.Search
-          placeholder="Github user profile"
-          block="block"
-          name="search"
-          type="search"
-        ></Custom.Search>
-        <Text margin="0 30px" size="12px" color="red">
-          <ErrorMessage name="search" />
-        </Text>
+        <Wrapper fill="fill">
+          <Custom.Search
+            placeholder="Github user profile"
+            name="search"
+            type="search"
+          ></Custom.Search>
+          <Text margin="0 30px" size="12px" color="red">
+            <ErrorMessage name="search" />
+          </Text>
+        </Wrapper>
         <SolidButton
           block="block"
           type="submit"
@@ -81,21 +82,21 @@ const HomePage = () => {
   );
 
   const _renderHeader = () => (
-    <TextContainer mode="block" weight="bold" align="center">
-      <Text margin="1em 0 0 0" size="72px">
-        GitHub
-      </Text>
-      <Text>check users and repos</Text>
-      <Wrapper fill="fill" align="center">
-        <Formik
-          validationSchema={schema}
-          initialValues={{ search: "" }}
-          onSubmit={onSubmit}
-        >
-          {_renderForm}
-        </Formik>
-      </Wrapper>
-    </TextContainer>
+    <Wrapper fill="fill" padding="0 4%" align="center">
+      <TextContainer mode="block" weight="bold" align="center">
+        <Text margin="1em 0 0 0" size="72px">
+          GitHub
+        </Text>
+        <Text>check users and repos</Text>
+      </TextContainer>
+      <Formik
+        validationSchema={schema}
+        initialValues={{ search: "" }}
+        onSubmit={onSubmit}
+      >
+        {_renderForm}
+      </Formik>
+    </Wrapper>
   );
 
   return (
@@ -113,6 +114,8 @@ const HomePage = () => {
             :( Sorry! We can't find any user with this name
           </Text>
         </If>
+
+        <Styled.Image src="/assets/images/repos.svg" />
       </PageContent>
     </PageContainer>
   );
