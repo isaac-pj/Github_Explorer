@@ -14,7 +14,7 @@ import PageContent from "../../components/Composed/PageContent";
 import ListItem from "../../components/Composed/ListItem";
 import NavigationBar from "../../components/Composed/NavigationBar";
 import { ClearButton, SolidButton } from "../../components/Simples/Buttons";
-import { If, Wrapper } from "../../components/Simples/Support";
+import { If, Wrapper, Hide } from "../../components/Simples/Support";
 import { Text, Link } from "../../components/Simples/Texts";
 import { SpinLoading } from "../../components/Simples/Loaders";
 import { Icon } from "../../components/Simples/Icon";
@@ -22,6 +22,8 @@ import codes from "../../components/Simples/Icon/codes";
 import { Avatar } from "../../components/Simples/Avatar";
 import { Panel } from "../../components/Simples/Panel";
 import { updateHistory } from "../../utils/general";
+import BackButton from "../../components/Composed/BackButton";
+import { MEDIA } from "../../enums/general.enum";
 
 const schema = Yup.object().shape({
   search: Yup.string().trim().required(),
@@ -74,40 +76,35 @@ const SearchPage = () => {
     history.replace({ ...history.location, state });
   };
 
-  const _renderForm = ({ values, errors, isValid, dirty }) => (
+  const _renderForm = ({ errors, isValid, dirty }) => (
     <Form>
       <Wrapper fill="fill" flow="row" align="center">
-        <If check={errors.search}>
-          <Icon name={codes.error} color="red" />
-        </If>
+        <Hide max={MEDIA.SM}>
+          <If check={errors.search}>
+            <Icon name={codes.error} color="red" />
+          </If>
+        </Hide>
         <Custom.Search
           placeholder="Github user profile"
-          width="300px"
+          width="400px"
           name="search"
           type="search"
         ></Custom.Search>
-        <SolidButton
-          type="submit"
-          margin="0 0 0 1em"
-          name="search"
-          disabled={!isValid || !dirty}
-        ></SolidButton>
+        <Hide max={MEDIA.SM}>
+          <SolidButton
+            type="submit"
+            margin="0 0 0 1em"
+            name="search"
+            disabled={!isValid || !dirty}
+          ></SolidButton>
+        </Hide>
       </Wrapper>
     </Form>
   );
 
   const _renderHeader = () => (
     <NavigationBar
-      start={
-        <ClearButton
-          action={() => history.goBack()}
-          name="back"
-          color={colors.textDark}
-        />
-      }
-      end={
-        <Text weight="bold" margin="1em 0 0 0" size="24px" children="GitHub" />
-      }
+      start={<BackButton history={history} color={colors.textDark} />}
     >
       <Formik
         validationSchema={schema}
@@ -117,6 +114,12 @@ const SearchPage = () => {
         {_renderForm}
       </Formik>
     </NavigationBar>
+  );
+
+  const _renderFooter = () => (
+    <Wrapper fill="fill" align="center">
+      <Text weight="bold" margin="1em" size="18px" children="GitHub" />
+    </Wrapper>
   );
 
   const _renderListStart = ({ avatar_url }) => <Avatar src={avatar_url} />;
@@ -156,7 +159,11 @@ const SearchPage = () => {
   );
 
   return (
-    <PageContainer color={colors.primaryColor} header={_renderHeader}>
+    <PageContainer
+      color={colors.primaryColor}
+      header={_renderHeader}
+      footer={_renderFooter}
+    >
       <PageContent>
         <SpinLoading margin="5em auto" active={isLoadingSearch} />
         <If check={users.length && !isLoadingSearch}>
