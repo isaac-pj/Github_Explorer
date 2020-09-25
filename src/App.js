@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import GlobalStyle from "./styles/globals";
 import HomePage from "./pages/Home/Home";
 import HistoryPage from "./pages/History/History";
 import RankingPage from "./pages/Ranking/Ranking";
@@ -10,6 +11,7 @@ function App() {
   return (
     <Router>
       <div className="App">
+        <GlobalStyle />
         <Switch>
           <Route path="/ranking">
             <RankingPage />
