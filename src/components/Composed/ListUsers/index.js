@@ -9,7 +9,6 @@ import { MEDIA } from "../../../enums/general.enum";
 
 const ListUsers = ({ users, history }) => {
   const showDetails = (user) => {
-    console.log("USER", user);
     history.push({ pathname: "/details", state: { user } });
   };
 

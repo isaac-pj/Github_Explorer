@@ -5,7 +5,6 @@ import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import * as Styled from "./Home.style";
-import colors from "../../theme/colors";
 import * as Github from "../../services/Github/GithubService";
 import * as Custom from "../../components/Styled/Custom.style";
 

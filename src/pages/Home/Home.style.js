@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Link } from "../../components/Simples/Texts";
-import colors from "../../theme/colors";
 
 export const Image = styled.img`
   width: 100%;

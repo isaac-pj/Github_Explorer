@@ -4,22 +4,19 @@ import { useHistory } from "react-router-dom";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
-import * as Styled from "./Search.style";
 import colors from "../../theme/colors";
 import * as Github from "../../services/Github/GithubService";
 import * as Custom from "../../components/Styled/Custom.style";
 
 import PageContainer from "../../components/Composed/PageContainer";
 import PageContent from "../../components/Composed/PageContent";
-import ListItem from "../../components/Composed/ListItem";
 import NavigationBar from "../../components/Composed/NavigationBar";
-import { ClearButton, SolidButton } from "../../components/Simples/Buttons";
+import { SolidButton } from "../../components/Simples/Buttons";
 import { If, Wrapper, Hide } from "../../components/Simples/Support";
 import { Text, Link } from "../../components/Simples/Texts";
 import { SpinLoading } from "../../components/Simples/Loaders";
 import { Icon } from "../../components/Simples/Icon";
 import codes from "../../components/Simples/Icon/codes";
-import { Avatar } from "../../components/Simples/Avatar";
 import { Panel } from "../../components/Simples/Panel";
 import { updateHistory } from "../../utils/general";
 import BackButton from "../../components/Composed/BackButton";

@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import * as Styled from "./Ranking.style";
-
 import PageContainer from "../../components/Composed/PageContainer";
-import NavigationBar from "../../components/Composed/NavigationBar";
 import PageContent from "../../components/Composed/PageContent";
 import PageNavigation from "../../components/Composed/PageNavigation";
-import { ClearButton, SolidButton } from "../../components/Simples/Buttons";
+import { SolidButton } from "../../components/Simples/Buttons";
 import { If, Wrapper } from "../../components/Simples/Support";
-import ListItem from "../../components/Composed/ListItem";
 import { Panel } from "../../components/Simples/Panel";
-import { Link, Text } from "../../components/Simples/Texts";
-import colors from "../../theme/colors";
+import { Text } from "../../components/Simples/Texts";
 import * as Github from "../../services/Github/GithubService";
-import { Avatar } from "../../components/Simples/Avatar";
 import { SpinLoading } from "../../components/Simples/Loaders";
 import {
   InputCreatableSelect,
@@ -23,7 +17,6 @@ import {
 import { LANGUAGES, SINCE } from "../../enums/general.enum";
 import { noBubble } from "../../utils/general";
 import ListUsers from "../../components/Composed/ListUsers";
-import BackButton from "../../components/Composed/BackButton";
 import BasicHeader from "../../components/Composed/BasicHeader";
 import BasicFooter from "../../components/Composed/BasicFooter";
 

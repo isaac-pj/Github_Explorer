@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Wrapper } from "../../components/Simples/Support";
 import { Text } from "../../components/Simples/Texts";
 import { MEDIA } from "../../enums/general.enum";
-import colors from "../../theme/colors";
 
 export const ListView = styled.section``;
 

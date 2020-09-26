@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import colors from "../../theme/colors";
 import * as Styled from "./Details.styles";
 import * as Github from "../../services/Github/GithubService";
 
 import PageContainer from "../../components/Composed/PageContainer";
-import NavigationBar from "../../components/Composed/NavigationBar";
 import { ClearButton } from "../../components/Simples/Buttons";
-import { Hide, If, Wrapper } from "../../components/Simples/Support";
+import { If, Wrapper } from "../../components/Simples/Support";
 import { Link, Text } from "../../components/Simples/Texts";
 import PageContent from "../../components/Composed/PageContent";
 import { Avatar } from "../../components/Simples/Avatar";
@@ -17,9 +15,8 @@ import { Grid, GridItem } from "../../components/Simples/Grid";
 import ListItem from "../../components/Composed/ListItem";
 import codes from "../../components/Simples/Icon/codes";
 import { Icon } from "../../components/Simples/Icon";
-import { MEDIA, ORDER } from "../../enums/general.enum";
+import { ORDER } from "../../enums/general.enum";
 import { SpinLoading } from "../../components/Simples/Loaders";
-import BackButton from "../../components/Composed/BackButton";
 import BasicHeader from "../../components/Composed/BasicHeader";
 import BasicFooter from "../../components/Composed/BasicFooter";
 
@@ -33,10 +30,6 @@ export const DetailsPage = (props) => {
   useEffect(() => {
     loadData(history?.location?.state?.user);
   }, []);
-
-  useEffect(() => {
-    console.log("REPOS", repos);
-  }, [repos]);
 
   const loadData = (user) => {
     if (user) {

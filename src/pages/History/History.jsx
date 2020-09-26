@@ -6,17 +6,14 @@ import * as Styled from "./History.style";
 import * as Github from "../../services/Github/GithubService";
 
 import PageContainer from "../../components/Composed/PageContainer";
-import NavigationBar from "../../components/Composed/NavigationBar";
 import PageContent from "../../components/Composed/PageContent";
 import PageNavigation from "../../components/Composed/PageNavigation";
 import { ClearButton } from "../../components/Simples/Buttons";
-import { Hide, If, Wrapper } from "../../components/Simples/Support";
-import { Link, Text } from "../../components/Simples/Texts";
+import { If, Wrapper } from "../../components/Simples/Support";
+import { Text } from "../../components/Simples/Texts";
 import { Panel } from "../../components/Simples/Panel";
 import ListItem from "../../components/Composed/ListItem";
-import colors from "../../theme/colors";
 import { SpinLoading } from "../../components/Simples/Loaders";
-import { MEDIA } from "../../enums/general.enum";
 import BasicHeader from "../../components/Composed/BasicHeader";
 import BasicFooter from "../../components/Composed/BasicFooter";
 import { updateHistory } from "../../utils/general";
@@ -24,12 +21,10 @@ import { updateHistory } from "../../utils/general";
 const HistoryPage = () => {
   const history = useHistory();
   const [searchHistory, setSearchHistory] = useState([]);
-  const [searchResult, setSearchResult] = useState(true);
   const [isLoadingSearch, setIsLoadingSearch] = useState(false);
 
   useEffect(() => {
     const history = JSON.parse(localStorage.getItem("history"));
-    // console.log(history);
     setSearchHistory(history || []);
   }, []);
 

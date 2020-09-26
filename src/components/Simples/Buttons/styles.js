@@ -18,7 +18,7 @@ export const Button = styled.button`
   ${({ fill, theme = "dark", color = colors.secondaryColor }) =>
     fill === "solid" &&
     `
-    color: ${theme == "clear" ? colors.textDark : colors.textLight};
+    color: ${theme === "clear" ? colors.textDark : colors.textLight};
     background-color: ${color};
     border: none;
   `}
