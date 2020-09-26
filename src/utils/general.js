@@ -26,3 +26,21 @@ export const updateHistory = (value) => {
 
   localStorage.setItem("history", JSON.stringify(history));
 };
+
+export const handlePagination = ({ link }) => {
+  if (link) {
+    link = link
+      .split(",")
+      .map((rel) => {
+        const [url, pos] = rel.split(";");
+        return {
+          [pos.match(/(next)|(prev)|(last)|(first)/)[0]]: {
+            url: url.match(/(?<=\<)(.*?)(?=\>)/)[0],
+            page: url.match(/(?<=page=)(\d+)/)[0],
+          },
+        };
+      })
+      .reduce((pv, cv) => ({ ...pv, ...cv }));
+    return link;
+  }
+};
