@@ -91,7 +91,20 @@ const HomePage = () => {
   );
 
   return (
-    <PageContainer header={_renderHeader}>
+    <PageContainer
+      header={_renderHeader}
+      footer={() => (
+        <Styled.Me
+          margin="2em auto"
+          align="center"
+          size="12px"
+          url="https://github.com/isaac-pj"
+          clear={true}
+        >
+          By <strong>@Isaac-pj</strong>
+        </Styled.Me>
+      )}
+    >
       <PageNavigation
         pages={[
           { url: "/home", name: "home", icon: "home" },

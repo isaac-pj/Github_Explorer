@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "../../components/Simples/Texts";
 import colors from "../../theme/colors";
 
 export const Image = styled.img`
@@ -7,4 +8,12 @@ export const Image = styled.img`
   bottom: 0;
   opacity: 0.1;
   pointer-events: none;
+`;
+
+export const Me = styled(Link)`
+  position: fixed;
+  z-index: 90;
+  left: 35%;
+  bottom: 0;
+  right: 35%;
 `;
