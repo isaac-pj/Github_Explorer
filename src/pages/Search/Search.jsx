@@ -27,6 +27,7 @@ import { MEDIA } from "../../enums/general.enum";
 import ListUsers from "../../components/Composed/ListUsers";
 import BasicFooter from "../../components/Composed/BasicFooter";
 import Pagination from "../../components/Composed/Pagination";
+import ReactTooltip from "react-tooltip";
 
 const schema = Yup.object().shape({
   search: Yup.string().trim().required(),
@@ -90,7 +91,9 @@ const SearchPage = () => {
       <Wrapper fill="fill" flow="row" align="center">
         <Hide max={MEDIA.SM}>
           <If check={errors.search}>
-            <Icon name={codes.error} color="red" />
+            <Text data-tip="search is a required field" margin="0 0.5em">
+              <Icon name={codes.error} color="red" />
+            </Text>
           </If>
         </Hide>
         <Custom.Search
@@ -139,37 +142,40 @@ const SearchPage = () => {
   );
 
   return (
-    <PageContainer
-      color={colors.primaryColor}
-      header={_renderHeader}
-      footer={() => <BasicFooter />}
-    >
-      <PageContent>
-        <SpinLoading margin="5em auto" active={isLoadingSearch} />
-        <If check={users.length && !isLoadingSearch}>
-          <Text size="16px" margin="1em 0" mode="block" align="center">
-            We found <strong>{total_count}</strong> results to{" "}
-            <strong>"{currentSearch}"</strong>
-          </Text>
-          <Panel>
-            <ListUsers users={users} history={history} />
-          </Panel>
-        </If>
-        <If check={!users.length && !isLoadingSearch}>
-          <Text weight="bold" margin="5em 0" mode="block" align="center">
-            :( Sorry! We can't find any user with this name
-          </Text>
-        </If>
-        <If check={!isLoadingSearch && (pagination.last || pagination.first)}>
-          <Pagination
-            current={pagination?.next?.page - 1 || pagination?.prev?.page + 1}
-            total={pagination?.last?.page}
-            prev={prevPage}
-            next={nextPage}
-          />
-        </If>
-      </PageContent>
-    </PageContainer>
+    <>
+      <ReactTooltip />
+      <PageContainer
+        color={colors.primaryColor}
+        header={_renderHeader}
+        footer={() => <BasicFooter />}
+      >
+        <PageContent>
+          <SpinLoading margin="5em auto" active={isLoadingSearch} />
+          <If check={users.length && !isLoadingSearch}>
+            <Text size="16px" margin="1em 0" mode="block" align="center">
+              We found <strong>{total_count}</strong> results to{" "}
+              <strong>"{currentSearch}"</strong>
+            </Text>
+            <Panel>
+              <ListUsers users={users} history={history} />
+            </Panel>
+          </If>
+          <If check={!users.length && !isLoadingSearch}>
+            <Text weight="bold" margin="5em 0" mode="block" align="center">
+              :( Sorry! We can't find any user with this name
+            </Text>
+          </If>
+          <If check={!isLoadingSearch && (pagination.last || pagination.first)}>
+            <Pagination
+              current={pagination?.next?.page - 1 || pagination?.prev?.page + 1}
+              total={pagination?.last?.page}
+              prev={prevPage}
+              next={nextPage}
+            />
+          </If>
+        </PageContent>
+      </PageContainer>
+    </>
   );
 };
 

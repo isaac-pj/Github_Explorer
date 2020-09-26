@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as Styled from "./styles";
 import { useHistory } from "react-router-dom";
+import ReactTooltip from "react-tooltip";
 
 import { Wrapper } from "../../Simples/Support";
 import { IconSolidButton } from "../../Simples/Buttons";
@@ -14,6 +15,7 @@ const PageNavigation = ({ pages }) => {
   const [menu, setMenu] = useState(false);
   return (
     <>
+      <ReactTooltip />
       <Styled.Aside>
         <Wrapper fill="fill" align="center">
           {pages.map((page, index) => (
@@ -22,6 +24,7 @@ const PageNavigation = ({ pages }) => {
               margin="1em"
               action={() => history.push(page.url)}
               icon={page.icon}
+              data-tip={page.name}
             ></IconSolidButton>
           ))}
         </Wrapper>
