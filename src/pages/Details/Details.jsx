@@ -29,6 +29,7 @@ export const DetailsPage = (props) => {
 
   useEffect(() => {
     loadData(history?.location?.state?.user);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadData = (user) => {

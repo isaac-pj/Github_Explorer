@@ -24,7 +24,7 @@ export const NavDrawer = styled.aside`
   right: 0;
   bottom: 0;
   background-color: ${colors.secondaryColor};
-  transition: transform 0.5s;
+  transition: transform 0.2s ease;
   transform-origin: right bottom;
   transform: scale(0);
 

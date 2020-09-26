@@ -35,7 +35,7 @@ export const handlePagination = ({ link }) => {
         const [url, pos] = rel.split(";");
         return {
           [pos.match(/(next)|(prev)|(last)|(first)/)[0]]: {
-            url: url.match(/(?<=\<)(.*?)(?=\>)/)[0],
+            url: url.match(/(?<=<)(.*?)(?=>)/)[0],
             page: url.match(/(?<=page=)(\d+)/)[0],
           },
         };

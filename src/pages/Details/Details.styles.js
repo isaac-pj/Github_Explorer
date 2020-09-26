@@ -16,5 +16,6 @@ export const ResposiveText = styled(Text)`
   @media (max-width: ${MEDIA.XS}) {
     margin: 0 !important;
     width: 100%;
+    text-align: center;
   }
 `;

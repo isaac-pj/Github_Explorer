@@ -43,6 +43,7 @@ const SearchPage = () => {
     } else {
       history.goBack();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
   const onSubmit = (values, actions) => {

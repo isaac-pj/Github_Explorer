@@ -1,8 +1,6 @@
 import axios from "axios";
 import { handlePagination } from "../../utils/general";
 
-const client_id = "Iv1.ca6c3c58ccdfa06b";
-const client_secret = "eaaf222d5c4d064b634159bfdf9398cb42d35519";
 const personal_token = "ba12995bf799f95689a902e9adb8b9dbcbb21bbd";
 
 const api = axios.create({
