@@ -26,6 +26,7 @@ import BackButton from "../../components/Composed/BackButton";
 import { MEDIA } from "../../enums/general.enum";
 import ListUsers from "../../components/Composed/ListUsers";
 import BasicFooter from "../../components/Composed/BasicFooter";
+import Pagination from "../../components/Composed/Pagination";
 
 const schema = Yup.object().shape({
   search: Yup.string().trim().required(),
@@ -33,43 +34,54 @@ const schema = Yup.object().shape({
 
 const SearchPage = () => {
   const [isLoadingSearch, setIsLoadingSearch] = useState(false);
-  const [users, setUsers] = useState([]);
+  const [search, setSearch] = useState({});
   const history = useHistory();
+  const currentSearch = JSON.parse(localStorage.getItem("history"))[0].search;
+  const { users = [], pagination = {}, total_count = 0 } = search;
 
   useEffect(() => {
-    if (history.location.state.users) {
-      setUsers(history.location.state.users);
+    if (history?.location?.state?.search?.users) {
+      setSearch(history.location.state.search);
     } else {
       history.goBack();
     }
-  }, []);
+  }, [search]);
 
   const onSubmit = (values, actions) => {
     searchUsers(values.search);
     updateHistory(values.search);
   };
 
-  const searchUsers = async (search) => {
+  const changePage = async (url) => {
     setIsLoadingSearch(true);
-    const data = await Github.searchUser(search);
-    setUsers(await getUsers(data.items));
-    updateHistoryState(data.items);
+    const response = await Github.request(url, true);
+    const result = await Github.parseSearch(response);
+    setSearch(result);
+    updateHistoryState(result);
     setIsLoadingSearch(false);
   };
 
-  const getUsers = async (arr) => {
-    const users = await Promise.all(
-      arr.map((user) => {
-        return Github.request(user.url);
-      })
-    );
-    console.log(users);
-    return users;
+  const nextPage = () => {
+    const { url } = pagination.next;
+    return url ? changePage(url) : false;
+  };
+
+  const prevPage = () => {
+    const { url } = pagination.prev;
+    return url ? changePage(url) : false;
+  };
+
+  const searchUsers = async (search) => {
+    setIsLoadingSearch(true);
+    const result = await Github.searchUser(search);
+    setSearch(result);
+    updateHistoryState(result);
+    setIsLoadingSearch(false);
   };
 
   const updateHistoryState = (result) => {
     const state = { ...history.location.state };
-    state.users = result;
+    state.search = result;
     history.replace({ ...history.location, state });
   };
 
@@ -118,7 +130,7 @@ const SearchPage = () => {
     >
       <Formik
         validationSchema={schema}
-        initialValues={{ search: "" }}
+        initialValues={{ search: currentSearch }}
         onSubmit={onSubmit}
       >
         {_renderForm}
@@ -135,6 +147,10 @@ const SearchPage = () => {
       <PageContent>
         <SpinLoading margin="5em auto" active={isLoadingSearch} />
         <If check={users.length && !isLoadingSearch}>
+          <Text size="16px" margin="1em 0" mode="block" align="center">
+            We found <strong>{total_count}</strong> results to{" "}
+            <strong>"{currentSearch}"</strong>
+          </Text>
           <Panel>
             <ListUsers users={users} history={history} />
           </Panel>
@@ -143,6 +159,14 @@ const SearchPage = () => {
           <Text weight="bold" margin="5em 0" mode="block" align="center">
             :( Sorry! We can't find any user with this name
           </Text>
+        </If>
+        <If check={!isLoadingSearch && (pagination.last || pagination.first)}>
+          <Pagination
+            current={pagination?.next?.page - 1 || pagination?.prev?.page + 1}
+            total={pagination?.last?.page}
+            prev={prevPage}
+            next={nextPage}
+          />
         </If>
       </PageContent>
     </PageContainer>

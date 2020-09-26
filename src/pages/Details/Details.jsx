@@ -124,7 +124,7 @@ export const DetailsPage = (props) => {
           </Grid>
         </Panel>
         <Wrapper margin="2em 0 1em 0" fill="fill" align="center">
-          <Text size="24px" weight="bold">
+          <Text size="20px" weight="bold">
             Public Repositories
           </Text>
           <If check={orderBy === ORDER.CREATED}>

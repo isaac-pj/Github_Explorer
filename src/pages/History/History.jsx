@@ -19,6 +19,7 @@ import { SpinLoading } from "../../components/Simples/Loaders";
 import { MEDIA } from "../../enums/general.enum";
 import BasicHeader from "../../components/Composed/BasicHeader";
 import BasicFooter from "../../components/Composed/BasicFooter";
+import { updateHistory } from "../../utils/general";
 
 const HistoryPage = () => {
   const history = useHistory();
@@ -34,26 +35,14 @@ const HistoryPage = () => {
 
   const searchUsers = async (search) => {
     setIsLoadingSearch(true);
-    const data = await Github.searchUser(search);
-    if (!data?.items?.length) {
-      setSearchResult(false);
-    } else {
-      history.push({
-        pathname: "/search",
-        state: {
-          users: await getUsers(data.items),
-        },
-      });
-    }
-    setIsLoadingSearch(false);
-  };
+    const result = await Github.searchUser(search);
 
-  const getUsers = async (arr) => {
-    return await Promise.all(
-      arr.map((user) => {
-        return Github.request(user.url);
-      })
-    );
+    updateHistory(search);
+    history.push({
+      pathname: "/search",
+      state: { search: result },
+    });
+    setIsLoadingSearch(false);
   };
 
   const clearHistory = () => {
@@ -93,7 +82,7 @@ const HistoryPage = () => {
       />
       <PageContent>
         <Text
-          size="22px"
+          size="16px"
           weight="bold"
           margin="1em 0"
           mode="block"

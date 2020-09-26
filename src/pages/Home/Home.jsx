@@ -34,26 +34,18 @@ const HomePage = () => {
 
   const searchUsers = async (search) => {
     setIsLoadingSearch(true);
-    const data = await Github.searchUser(search);
-    if (!data?.items?.length) {
+    const result = await Github.searchUser(search);
+    if (!result?.users?.length) {
       setSearchResult(false);
     } else {
       history.push({
         pathname: "/search",
         state: {
-          users: await getUsers(data.items),
+          search: result,
         },
       });
     }
     setIsLoadingSearch(false);
-  };
-
-  const getUsers = async (arr) => {
-    return await Promise.all(
-      arr.map((user) => {
-        return Github.request(user.url);
-      })
-    );
   };
 
   const _renderForm = ({ values, isValid, dirty, isSubmitting }) => (
