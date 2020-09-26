@@ -13,7 +13,7 @@ const Pagination = ({ next, prev, current, total }) => {
         <Text margin="0 1em" weight="bold">
           {current}-{total}
         </Text>
-        <ClearButton disabled={!next} action={next} name="next" />
+        <ClearButton disabled={current === total} action={next} name="next" />
       </Hide>
       <Hide min={MEDIA.XS}>
         <IconClearButton
@@ -26,7 +26,7 @@ const Pagination = ({ next, prev, current, total }) => {
           {current}-{total}
         </Text>
         <IconClearButton
-          disabled={!next}
+          disabled={current === total}
           action={next}
           size={40}
           icon={codes.navigate_next}

@@ -83,6 +83,15 @@ const SearchPage = () => {
     history.replace({ ...history.location, state });
   };
 
+  const getCurrentPage = () => {
+    const { next = null, prev = null } = pagination;
+    return next?.page ? parseInt(next?.page) - 1 : parseInt(prev?.page) + 1;
+  };
+  const getTotalPages = () => {
+    const { prev = null, last = null } = pagination;
+    return last?.page ? last?.page : parseInt(prev?.page) + 1;
+  };
+
   const _renderForm = ({ errors, isValid, dirty }) => (
     <Form>
       <Wrapper fill="fill" flow="row" align="center">
@@ -164,8 +173,8 @@ const SearchPage = () => {
           </If>
           <If check={!isLoadingSearch && (pagination.last || pagination.first)}>
             <Pagination
-              current={pagination?.next?.page - 1 || pagination?.prev?.page + 1}
-              total={pagination?.last?.page}
+              current={getCurrentPage()}
+              total={getTotalPages()}
               prev={prevPage}
               next={nextPage}
             />
