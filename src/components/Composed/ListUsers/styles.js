@@ -9,5 +9,6 @@ export const ResposiveWrapper = styled(Wrapper)`
   @media (max-width: ${MEDIA.XS}) {
     justify-content: center;
     align-items: center;
+    flex-direction: column;
   }
 `;
