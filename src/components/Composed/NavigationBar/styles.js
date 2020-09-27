@@ -16,7 +16,7 @@ export const Container = styled.nav`
     margin: ${margin};
   `}
 
-  ${({ color = colors.warningColor }) =>
+  ${({ color = colors.primaryColor }) =>
     `
     background-color: ${color};
   `}
