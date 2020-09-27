@@ -12,13 +12,11 @@ import PageContent from "../../components/Composed/PageContent";
 import { Avatar } from "../../components/Simples/Avatar";
 import { Panel } from "../../components/Simples/Panel";
 import { Grid, GridItem } from "../../components/Simples/Grid";
-import ListItem from "../../components/Composed/ListItem";
-import codes from "../../components/Simples/Icon/codes";
-import { Icon } from "../../components/Simples/Icon";
 import { ORDER } from "../../enums/general.enum";
 import { SpinLoading } from "../../components/Simples/Loaders";
 import BasicHeader from "../../components/Composed/BasicHeader";
 import BasicFooter from "../../components/Composed/BasicFooter";
+import ListRepos from "../../components/Composed/ListRepos";
 
 export const DetailsPage = (props) => {
   const [user, setUser] = useState({});
@@ -56,22 +54,6 @@ export const DetailsPage = (props) => {
     setIsLoadingRepos(false);
     setRepos(repos);
   };
-
-  const _renderRepos = () =>
-    repos.map((repo) => (
-      <ListItem
-        adapt={true}
-        start={<Icon size="32px" name={codes.folder} />}
-        key={repo.id}
-      >
-        <Styled.ResposiveWrapper>
-          <Text weight="bold">{repo.name}</Text>
-          <Link url={repo.html_url} size="12px">
-            {repo.html_url}
-          </Link>
-        </Styled.ResposiveWrapper>
-      </ListItem>
-    ));
 
   return (
     <PageContainer
@@ -131,7 +113,7 @@ export const DetailsPage = (props) => {
         <Panel>
           <Styled.ListView>
             <SpinLoading margin="5em auto" active={isLoadingRepos} />
-            <If check={!isLoadingRepos}>{_renderRepos()}</If>
+            <If check={!isLoadingRepos}>{<ListRepos repos={repos} />}</If>
             <If check={!repos.length && !isLoadingRepos}>
               <Text weight="bold" margin="5em 0" mode="block" align="center">
                 :( Sorry! nothing to show
