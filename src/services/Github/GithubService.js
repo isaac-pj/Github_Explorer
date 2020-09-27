@@ -33,13 +33,32 @@ export const getRepos = async (user, sort = "created", direction = "desc") => {
   return response.data;
 };
 
-export const getRanking = async (language, since) => {
+export const getRankingDevs = async (language, since) => {
   const response = await axios.get(
     `https://ghapi.huchen.dev/developers?language=${language}&since=${since}`
   );
   const data = await Promise.all(
     response.data.map((user) => getUser(user.username))
   );
+  return data.slice(0, 5);
+};
+
+const parseRepoData = (repo) => {
+  return {
+    ...repo,
+    html_url: repo.url,
+    forks_count: repo.forks,
+    stargazers_count: repo.stars,
+  };
+};
+
+export const getRankingRepos = async (language, since) => {
+  const response = await axios.get(
+    `https://ghapi.huchen.dev/repositories?language=${language}&since=${since}`
+  );
+
+  const data = response.data.map((repo) => parseRepoData(repo));
+
   return data.slice(0, 5);
 };
 
