@@ -16,21 +16,23 @@ const Pagination = ({ next, prev, current, total }) => {
         <ClearButton disabled={current === total} action={next} name="next" />
       </Hide>
       <Hide min={MEDIA.XS}>
-        <IconClearButton
-          disabled={current === 1}
-          action={prev}
-          size={40}
-          icon={codes.navigate_before}
-        />
-        <Text margin="1em" weight="bold">
-          {current}-{total}
-        </Text>
-        <IconClearButton
-          disabled={current === total}
-          action={next}
-          size={40}
-          icon={codes.navigate_next}
-        />
+        <Wrapper flow="row" align="center">
+          <IconClearButton
+            disabled={current === 1}
+            action={prev}
+            size={40}
+            icon={codes.navigate_before}
+          />
+          <Text margin="0 1em" weight="bold">
+            {current}-{total}
+          </Text>
+          <IconClearButton
+            disabled={current === total}
+            action={next}
+            size={40}
+            icon={codes.navigate_next}
+          />
+        </Wrapper>
       </Hide>
     </Wrapper>
   );
