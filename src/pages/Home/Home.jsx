@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import { Formik, Form, ErrorMessage } from "formik";
@@ -11,6 +11,7 @@ import * as Custom from "../../components/Styled/Custom.style";
 import PageContainer from "../../components/Composed/PageContainer";
 import PageContent from "../../components/Composed/PageContent";
 import { SolidButton } from "../../components/Simples/Buttons";
+import { Avatar } from "../../components/Simples/Avatar";
 import { If, Wrapper } from "../../components/Simples/Support";
 import { TextContainer, Text, Link } from "../../components/Simples/Texts";
 import { SpinLoading } from "../../components/Simples/Loaders";
@@ -23,10 +24,17 @@ const schema = Yup.object().shape({
 });
 
 const HomePage = () => {
+  const [authUser, setAuthUser] = useState({});
   const [searchResult, setSearchResult] = useState(true);
   const [rateLimitMsg, setRateLimitMsg] = useState("");
   const [isLoadingSearch, setIsLoadingSearch] = useState(false);
   const history = useHistory();
+
+  useEffect(() => {
+    (async () => {
+      setAuthUser(await Github.getAuthUser());
+    })();
+  }, []);
 
   const onSubmit = (values, actions) => {
     searchUsers(values.search);
@@ -90,7 +98,14 @@ const HomePage = () => {
           }
         }}
       >
-        AUTHENTICATE
+        <Wrapper flow="row" align="center">
+          <If check={authUser?.login}>
+            <Avatar size="3em" src={authUser.avatar_url} />
+          </If>
+          <Wrapper margin="1em">
+            {authUser?.login ? authUser.login : "AUTHENTICATE"}
+          </Wrapper>
+        </Wrapper>
       </Link>
     </Wrapper>
   );

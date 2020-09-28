@@ -20,6 +20,15 @@ const config = {
   },
 };
 
+export const getAuthUser = async () => {
+  try {
+    const response = await api.get("/user");
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const searchUser = async (string, page = 0) => {
   try {
     const response = await api.get(
