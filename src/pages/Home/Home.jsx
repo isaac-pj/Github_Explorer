@@ -147,7 +147,7 @@ const HomePage = () => {
             {rateLimitMsg}
           </Text>
         </If>
-        <Styled.Image src="/assets/images/repos.svg" />
+        <Styled.Image src="https://isaac-pj.github.io/Github_Explorer/assets/images/repos.svg" />
       </PageContent>
     </PageContainer>
   );
