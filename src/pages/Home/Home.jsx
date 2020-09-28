@@ -116,7 +116,7 @@ const HomePage = () => {
         <Text margin="1em 0 0 0" size="72px">
           GitHub
         </Text>
-        <Text>check users and repos</Text>
+        <Text>check users and repos!</Text>
       </TextContainer>
       <Formik
         validationSchema={schema}
