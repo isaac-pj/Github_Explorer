@@ -1,29 +1,44 @@
 import axios from "axios";
 import { handlePagination } from "../../utils/general";
 
-const personal_token = "ba12995bf799f95689a902e9adb8b9dbcbb21bbd";
+const token = localStorage.getItem("personal_token");
+const personal_token = !token
+  ? localStorage.setItem("personal_token", "")
+  : token;
 
 const api = axios.create({
   baseURL: "https://api.github.com",
   params: {},
-  headers: { Authorization: `Bearer ${personal_token}` },
+  headers: {
+    Authorization: personal_token ? `Bearer ${personal_token}` : null,
+  },
 });
 
 const config = {
-  headers: { Authorization: `Bearer ${personal_token}` },
+  headers: {
+    Authorization: personal_token ? `Bearer ${personal_token}` : null,
+  },
 };
 
 export const searchUser = async (string, page = 0) => {
-  const response = await api.get(
-    `/search/users?q=${string}&page=${page}&per_page=10`
-  );
+  try {
+    const response = await api.get(
+      `/search/users?q=${string}&page=${page}&per_page=10`
+    );
 
-  return await parseSearch(response);
+    return await parseSearch(response);
+  } catch ({ response: { data } }) {
+    return data;
+  }
 };
 
 export const getUser = async (username) => {
-  const response = await api.get(`/users/${username}`);
-  return response.data;
+  try {
+    const response = await api.get(`/users/${username}`);
+    return response.data;
+  } catch ({ response: { data } }) {
+    return data;
+  }
 };
 
 export const getRepos = async (user, sort = "created", direction = "desc") => {

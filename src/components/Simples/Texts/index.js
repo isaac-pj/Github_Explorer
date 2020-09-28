@@ -13,7 +13,11 @@ export const TextContainer = (props) => (
 export const Link = (props) => (
   <Styled.Link
     {...props}
-    onClick={(e) => noBubble(e, () => window.open(props.url, "_blank"))}
+    onClick={(e) =>
+      noBubble(e, () =>
+        props?.action ? props.action() : window.open(props.url, "_blank")
+      )
+    }
   >
     {props.children}
   </Styled.Link>

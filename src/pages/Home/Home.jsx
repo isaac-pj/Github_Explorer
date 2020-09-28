@@ -12,10 +12,11 @@ import PageContainer from "../../components/Composed/PageContainer";
 import PageContent from "../../components/Composed/PageContent";
 import { SolidButton } from "../../components/Simples/Buttons";
 import { If, Wrapper } from "../../components/Simples/Support";
-import { TextContainer, Text } from "../../components/Simples/Texts";
+import { TextContainer, Text, Link } from "../../components/Simples/Texts";
 import { SpinLoading } from "../../components/Simples/Loaders";
 import PageNavigation from "../../components/Composed/PageNavigation";
 import { updateHistory } from "../../utils/general";
+import colors from "../../theme/colors";
 
 const schema = Yup.object().shape({
   search: Yup.string().trim().required(),
@@ -23,6 +24,7 @@ const schema = Yup.object().shape({
 
 const HomePage = () => {
   const [searchResult, setSearchResult] = useState(true);
+  const [rateLimitMsg, setRateLimitMsg] = useState("");
   const [isLoadingSearch, setIsLoadingSearch] = useState(false);
   const history = useHistory();
 
@@ -36,6 +38,9 @@ const HomePage = () => {
     const result = await Github.searchUser(search);
     if (!result?.users?.length) {
       setSearchResult(false);
+      if (result.message) {
+        setRateLimitMsg(result.message);
+      }
     } else {
       history.push({
         pathname: "/search",
@@ -68,6 +73,25 @@ const HomePage = () => {
           disabled={!isValid || !dirty}
         ></SolidButton>
       </Form>
+      <Link
+        color={colors.secondaryColor}
+        clear={true}
+        align="center"
+        margin="1em"
+        weight="bold"
+        size="10px"
+        action={() => {
+          const token = window.prompt("Put a github personal token", "");
+          if (token) {
+            localStorage.setItem("personal_token", token);
+            window.location.reload();
+          } else {
+            return true;
+          }
+        }}
+      >
+        AUTHENTICATE
+      </Link>
     </Wrapper>
   );
 
@@ -113,12 +137,16 @@ const HomePage = () => {
       />
       <PageContent>
         <SpinLoading margin="1em auto" active={isLoadingSearch} />
-        <If check={!searchResult && !isLoadingSearch}>
+        <If check={!searchResult && !isLoadingSearch && !rateLimitMsg}>
           <Text weight="bold" margin="5em 0" mode="block" align="center">
             :( Sorry! We can't find any user with this name
           </Text>
         </If>
-
+        <If check={rateLimitMsg && !isLoadingSearch}>
+          <Text weight="bold" margin="5em 0" mode="block" align="center">
+            {rateLimitMsg}
+          </Text>
+        </If>
         <Styled.Image src="/assets/images/repos.svg" />
       </PageContent>
     </PageContainer>
