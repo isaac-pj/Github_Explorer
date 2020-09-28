@@ -87,7 +87,7 @@ const HistoryPage = () => {
         </Text>
         <If check={!isLoadingSearch}>
           <Panel>
-            <Styled.ListView>
+            <Styled.ListView data-testid="list-history">
               {_renderHistoryList()}
               <If check={!searchHistory?.length}>
                 <Text weight="bold" margin="5em 0" mode="block" align="center">

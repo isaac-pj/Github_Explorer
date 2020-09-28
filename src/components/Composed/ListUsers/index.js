@@ -53,7 +53,7 @@ const ListUsers = ({ users, history, position }) => {
   );
 
   return (
-    <Styled.ListView>
+    <Styled.ListView aria-label="list-users">
       {users.map((user, index) => {
         return (
           <ListItem

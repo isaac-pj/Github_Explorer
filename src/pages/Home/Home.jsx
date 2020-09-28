@@ -49,9 +49,10 @@ const HomePage = () => {
 
   const _renderForm = ({ values, isValid, dirty, isSubmitting }) => (
     <Wrapper width="90%" maxWidth="300px" margin="3em 0 0 0">
-      <Form>
+      <Form data-testid="form-search">
         <Wrapper fill="fill">
           <Custom.Search
+            data-testid="input-search"
             placeholder="Github user profile"
             name="search"
             type="search"
@@ -61,6 +62,7 @@ const HomePage = () => {
           </Text>
         </Wrapper>
         <SolidButton
+          data-testid="submit-search"
           block="block"
           type="submit"
           margin="1em 0 0 0"
@@ -74,7 +76,7 @@ const HomePage = () => {
   const _renderHeader = () => (
     <Wrapper fill="fill" padding="0 4%" align="center">
       <TextContainer mode="block" weight="bold" align="center">
-        <Text margin="1em 0 0 0" size="72px">
+        <Text data-testid="github" margin="1em 0 0 0" size="72px">
           GitHub
         </Text>
         <Text>check users and repos</Text>

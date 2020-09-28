@@ -34,7 +34,8 @@ const SearchPage = () => {
   const [isLoadingSearch, setIsLoadingSearch] = useState(false);
   const [search, setSearch] = useState({});
   const history = useHistory();
-  const currentSearch = JSON.parse(localStorage.getItem("history"))[0].search;
+  const currentSearch =
+    JSON.parse(localStorage.getItem("history"))[0].search || "";
   const { users = [], pagination = {}, total_count = 0 } = search;
 
   useEffect(() => {
@@ -93,8 +94,8 @@ const SearchPage = () => {
     return last?.page ? last?.page : parseInt(prev?.page) + 1;
   };
 
-  const _renderForm = ({ errors, isValid, dirty }) => (
-    <Form>
+  const _renderForm = ({ values, errors, isValid, dirty }) => (
+    <Form data-testid="form-search">
       <Wrapper fill="fill" flow="row" align="center">
         <Hide max={MEDIA.SM}>
           <If check={errors.search}>
@@ -104,6 +105,7 @@ const SearchPage = () => {
           </If>
         </Hide>
         <Custom.Search
+          data-testid="input-search"
           placeholder="Github user profile"
           width="400px"
           name="search"
@@ -111,10 +113,11 @@ const SearchPage = () => {
         ></Custom.Search>
         <Hide max={MEDIA.SM}>
           <SolidButton
+            data-testid="submit-search"
             type="submit"
             margin="0 0 0 1em"
             name="search"
-            disabled={!isValid || !dirty}
+            disabled={!isValid || !dirty || !values.search}
           ></SolidButton>
         </Hide>
       </Wrapper>

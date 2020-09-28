@@ -1,7 +1,7 @@
 import axios from "axios";
 import { handlePagination } from "../../utils/general";
 
-const personal_token = "ba12995bf799f95689a902e9adb8b9dbcbb21bbd";
+const personal_token = "f8e08ce00909f56f2e0b37312608e86a0e7bfaf7";
 
 const api = axios.create({
   baseURL: "https://api.github.com",

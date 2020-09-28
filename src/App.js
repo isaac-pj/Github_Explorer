@@ -10,7 +10,7 @@ import SearchPage from "./pages/Search/Search";
 function App() {
   return (
     <Router>
-      <div className="App">
+      <div className="App" data-testid="app">
         <GlobalStyle />
         <Switch>
           <Route path="/ranking">

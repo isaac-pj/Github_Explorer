@@ -116,7 +116,12 @@ const Ranking = () => {
         <Panel>
           <SpinLoading margin="5em auto" active={isLoadingSearch} />
           <If check={!isLoadingSearch && tab === 0}>
-            <ListUsers position={true} users={users} history={history} />
+            <ListUsers
+              aria-label="list-users"
+              position={true}
+              users={users}
+              history={history}
+            />
           </If>
           <If check={!isLoadingSearch && tab === 1}>
             <ListRepos repos={repos} />
