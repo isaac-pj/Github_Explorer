@@ -162,7 +162,7 @@ const HomePage = () => {
             {rateLimitMsg}
           </Text>
         </If>
-        <Styled.Image src="/assets/images/repos.svg" />
+        <Styled.Image src="assets/images/repos.svg" />
       </PageContent>
     </PageContainer>
   );
