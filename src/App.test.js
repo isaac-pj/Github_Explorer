@@ -15,7 +15,7 @@ test("Sholud be render", () => {
   expect(app).toBeInTheDocument();
 });
 
-describe("Tests for home page", () => {
+describe("Tests for search users", () => {
   afterEach(cleanup);
 
   test("Should be have a github title", () => {
@@ -88,12 +88,23 @@ describe("Tests for home page", () => {
     expect(submit).toBeInTheDocument();
 
     await waitForElement(() =>
-      fireEvent.change(input, { target: { value: "torvalds" } })
+      fireEvent.change(input, { target: { value: "isaac-pj" } })
     );
-    expect(input.value).toEqual("torvalds");
-
-    console.log(input.outerHTML);
+    expect(input.value).toEqual("isaac-pj");
 
     await waitForElement(() => fireEvent.click(submit));
+    expect(
+      await screen.findByText("https://github.com/isaac-pj")
+    ).toBeInTheDocument();
+
+    await waitForElement(() =>
+      fireEvent.change(input, { target: { value: "" } })
+    );
+    expect(input.value).toEqual("");
+
+    await waitForElement(() => fireEvent.click(submit));
+    expect(
+      await screen.findByText("https://github.com/isaac-pj")
+    ).toBeInTheDocument();
   });
 });
